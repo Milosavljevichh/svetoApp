@@ -1,8 +1,10 @@
 "use client";
+import './globals.css';
 import React from "react";
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import { useHandleStreamResponse } from "../utilities/runtime-helpers";
+import DonationPage from "./DonatePage/page";
 
 function LanguageContextProvider({ children }) {
   const [selectedLanguage, setSelectedLanguage] = useState("en");
@@ -70,14 +72,37 @@ function LanguageContextProvider({ children }) {
           )}
         </div>
       </div>
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10">
+        {React.Children.map(children, (child) => {
+          // Check if child is a valid React element
+          if (React.isValidElement(child)) {
+            return React.cloneElement(child, { selectedLanguage });
+          }
+          return child; // Return the child as-is if it's not a valid element
+        })}
+      </div>
     </div>
   );
 }
 
 function MainPage({
   initialContent = "Welcome to your daily spiritual guide. Let me begin with a prayer for you.",
+  selectedLanguage
 }) {
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust breakpoint as needed
+    };
+
+    checkScreenSize(); // Check on mount
+    window.addEventListener("resize", checkScreenSize); // Listen for resize
+
+    return () => window.removeEventListener("resize", checkScreenSize); // Cleanup
+  }, []);
+
   const [content, setContent] = useState(initialContent);
   const [isLoading, setIsLoading] = useState(false);
   const [icon, setIcon] = useState("cross");
@@ -194,7 +219,7 @@ function MainPage({
             },
             {
               role: "user",
-              content: content || generatePrompt("en"),
+              content: content || generatePrompt(selectedLanguage),
             },
           ],
           stream: true,
@@ -330,7 +355,7 @@ function MainPage({
           </div>
 
           <div className="relative p-8 border-4 border-[#8b4513] rounded-lg bg-[#f8f5f0]">
-            <div className="absolute inset-0">
+            <div className="absolute inset-0 pointer-events-none">
               <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#8b4513]"></div>
               <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#8b4513]"></div>
               <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-[#8b4513]"></div>
@@ -456,7 +481,10 @@ function MainPage({
                 {suggestedQuestions.map((question, index) => (
                   <button
                     key={index}
-                    onClick={() => setContent(question.text)}
+                    onClick={() => {
+                      setContent(question.text); // Set the content to the question text
+                      refreshContent(); // Trigger the API request
+                    }}
                     className="text-left p-3 rounded-lg border-2 border-[#8b4513] text-[#8b4513] hover:bg-[#8b4513] hover:text-white transition-colors flex items-center gap-2 font-crimson-text"
                   >
                     <i className={question.icon}></i>
@@ -698,11 +726,19 @@ function MainPage({
                   <i className="fas fa-heart"></i>
                   Contribute Now
                 </button>
+                <button
+                  onClick={() => setShowDonationPopup(false)} 
+                  className="w-full bg-[#fff] text-[#8b4513] font-crimson-text text-xl px-8 py-4 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2 border-solid border-2 border-[#8b4513]"
+                >
+                  <i className="fas fa-heart"></i>
+                  Close
+                </button>
               </div>
             </div>
           </div>
         </>
       )}
+      {isMobile && <DonationPage />}
     </LanguageContextProvider>
     </>
   );
@@ -710,9 +746,9 @@ function MainPage({
 
 function StoryComponent() {
   return (
-    <div>
-      <MainComponent initialContent="Blessed are the pure in heart, for they shall see God. - Matthew 5:8" />
-    </div>
+    <LanguageContextProvider>
+      <MainPage initialContent="Blessed are the pure in heart, for they shall see God. - Matthew 5:8" />
+    </LanguageContextProvider>
   );
 }
 

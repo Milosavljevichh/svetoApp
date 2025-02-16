@@ -1,12 +1,27 @@
 "use client";
+import '../globals.css';
 import React from "react";
-import { useState } from "react";import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState, useEffect } from "react";import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faUserPlus, faPaperPlane, faBell, faUsers, faPray } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/Header";
 
 
 
-function MainComponent() {
+function DonationPage() {
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust breakpoint as needed
+    };
+
+    checkScreenSize(); // Check on mount
+    window.addEventListener("resize", checkScreenSize); // Listen for resize
+
+    return () => window.removeEventListener("resize", checkScreenSize); // Cleanup
+  }, []);
+
   const [showRegistration, setShowRegistration] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -57,7 +72,7 @@ function MainComponent() {
 
   return (
     <div className="min-h-screen bg-[#f8f5f0]">
-        <Header />
+        {!isMobile && <Header />}
       <div className="max-w-4xl mx-auto p-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-crimson-text text-[#2c1810] mb-6">
@@ -225,4 +240,4 @@ function MainComponent() {
   );
 }
 
-export default MainComponent;
+export default DonationPage;

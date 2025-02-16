@@ -1,8 +1,13 @@
+/* styles/globals.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Monomakh&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-body {
-    font-family: 'Inter'
+body *{
+  font-family: "Monomakh", serif;
+  font-weight: 400;
+  font-style: normal;
 }
