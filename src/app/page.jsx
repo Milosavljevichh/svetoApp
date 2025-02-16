@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import { useHandleStreamResponse } from "../utilities/runtime-helpers";
 import DonationPage from "./DonatePage/page";
 
+
 function LanguageContextProvider({ children }) {
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -37,7 +38,7 @@ function LanguageContextProvider({ children }) {
             <span>{languages[selectedLanguage].flag}</span>
             <span>{languages[selectedLanguage].name}</span>
             <i
-              className={`fas fa-chevron-${
+              className={`fa fa-chevron-${
                 isDropdownOpen ? "up" : "down"
               } ml-2`}
             ></i>
@@ -72,14 +73,7 @@ function LanguageContextProvider({ children }) {
           )}
         </div>
       </div>
-      <div className="relative z-10">
-        {React.Children.map(children, (child) => {
-          // Check if child is a valid React element
-          if (React.isValidElement(child)) {
-            return React.cloneElement(child, { selectedLanguage });
-          }
-          return child; // Return the child as-is if it's not a valid element
-        })}
+      <div className="relative z-10">{children}
       </div>
     </div>
   );
@@ -89,6 +83,11 @@ function MainPage({
   initialContent = "Welcome to your daily spiritual guide. Let me begin with a prayer for you.",
   selectedLanguage
 }) {
+
+  useEffect(() => {
+    // Dynamically load the Font Awesome JS script on the client side only
+    import('@fortawesome/fontawesome-free/js/all.js');
+  }, []);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -126,9 +125,9 @@ function MainPage({
   });
 
   const icons = {
-    cross: "fas fa-cross",
-    book: "fas fa-book-bible",
-    prayer: "fas fa-praying-hands",
+    cross: "fa fa-cross",
+    book: "fa fa-book-bible",
+    prayer: "fa fa-praying-hands",
   };
 
   const [previousContent, setPreviousContent] = useState([initialContent]);
@@ -314,23 +313,23 @@ function MainPage({
   const suggestedQuestions = [
     {
       text: "What is the meaning of fasting in Orthodox tradition?",
-      icon: "fas fa-utensils",
+      icon: "fa fa-utensils",
     },
     {
       text: "How can I start a prayer routine?",
-      icon: "fas fa-pray",
+      icon: "fa fa-pray",
     },
     {
       text: "What is the role of icons in Orthodox Christianity?",
-      icon: "fas fa-image",
+      icon: "fa fa-image",
     },
     {
       text: "Who are the most significant saints in the Orthodox Church?",
-      icon: "fas fa-church",
+      icon: "fa fa-church",
     },
     {
       text: "Can you explain the importance of the Holy Trinity?",
-      icon: "fas fa-cross",
+      icon: "fa fa-cross",
     },
   ];
 
@@ -341,7 +340,7 @@ function MainPage({
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <div className="max-w-4xl w-full text-center space-y-8">
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-6xl font-crimson-text text-[#2c1810]">
+            <h1 className="text-4xl md:text-6xl font-crimson-text text-[#8b4513]">
               Orthodox Christianity
             </h1>
 
@@ -371,7 +370,7 @@ function MainPage({
                   isLoading ? "opacity-50" : "opacity-100"
                 }`}
               >
-                <i className="fas fa-pray text-2xl text-[#8b4513] mb-4"></i>
+                <i className="fa fa-pray text-2xl text-[#8b4513] mb-4"></i>
                 <p className="text-xl font-crimson-text text-[#2c1810]">
                   {dailyPrayer || streamingMessage || initialContent}
                 </p>
@@ -430,7 +429,7 @@ function MainPage({
                 }}
                 className="flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"
               >
-                <i className="fas fa-image"></i>
+                <i className="fa fa-image"></i>
                 <span>About Icons</span>
               </button>
 
@@ -441,7 +440,7 @@ function MainPage({
                 }}
                 className="flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"
               >
-                <i className="fas fa-pray"></i>
+                <i className="fa fa-pray"></i>
                 <span>Healing Prayer</span>
               </button>
 
@@ -454,7 +453,7 @@ function MainPage({
                 }}
                 className="flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"
               >
-                <i className="fas fa-book-reader"></i>
+                <i className="fa fa-book-reader"></i>
                 <span>About Fasting</span>
               </button>
             </div>
@@ -473,7 +472,7 @@ function MainPage({
                   className="absolute right-3 bottom-3 bg-[#8b4513] text-white p-2 rounded-lg transform transition hover:scale-105 flex items-center justify-center"
                   aria-label="Submit question"
                 >
-                  <i className="fas fa-paper-plane"></i>
+                  <i className="fa fa-paper-plane"></i>
                 </button>
               </div>
 
@@ -525,14 +524,14 @@ function MainPage({
                   className="text-[#8b4513] hover:text-[#2c1810] transition-colors"
                   aria-label="Share via Email"
                 >
-                  <i className="fas fa-envelope text-lg"></i>
+                  <i className="fa fa-envelope text-lg"></i>
                 </button>
                 <button
                   onClick={() => handleShare("copy")}
                   className="text-[#8b4513] hover:text-[#2c1810] transition-colors relative"
                   aria-label="Copy to clipboard"
                 >
-                  <i className="fas fa-copy text-lg"></i>
+                  <i className="fa fa-copy text-lg"></i>
                   {showCopySuccess && (
                     <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 text-xs text-[#2c1810] bg-white px-2 py-1 rounded shadow-sm">
                       Copied!
@@ -547,7 +546,7 @@ function MainPage({
                 onClick={handleDonationClick}
                 className="bg-[#8b4513] text-white px-8 py-3 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2 mx-auto"
               >
-                <i className="fas fa-heart"></i>
+                <i className="fa fa-heart"></i>
                 Support Our Mission
               </button>
               <a
@@ -559,9 +558,9 @@ function MainPage({
             </div>
 
             <div className="mt-12 flex justify-center space-x-8">
-              <i className="fas fa-cross text-4xl text-[#8b4513]"></i>
-              <i className="fas fa-church text-4xl text-[#8b4513]"></i>
-              <i className="fas fa-book-bible text-4xl text-[#8b4513]"></i>
+              <i className="fa fa-cross text-4xl text-[#8b4513]"></i>
+              <i className="fa fa-church text-4xl text-[#8b4513]"></i>
+              <i className="fa fa-book-bible text-4xl text-[#8b4513]"></i>
             </div>
           </div>
         </div>
@@ -579,7 +578,7 @@ function MainPage({
                 onClick={() => setShowDonationPopup(false)}
                 className="absolute top-4 right-4 text-[#8b4513] hover:text-[#2c1810] transition-colors"
               >
-                <i className="fas fa-times text-xl"></i>
+                <i className="fa fa-times text-xl"></i>
               </button>
 
               <h2 className="text-2xl font-crimson-text text-[#2c1810] mb-6 text-center">
@@ -595,7 +594,7 @@ function MainPage({
                       : "bg-white border-2 border-[#8b4513] text-[#8b4513]"
                   }`}
                 >
-                  <i className="fas fa-comment-alt"></i>
+                  <i className="fa fa-comment-alt"></i>
                   Pay via SMS
                 </button>
 
@@ -607,7 +606,7 @@ function MainPage({
                       : "bg-white border-2 border-[#8b4513] text-[#8b4513]"
                   }`}
                 >
-                  <i className="fas fa-credit-card"></i>
+                  <i className="fa fa-credit-card"></i>
                   Credit/Debit Card
                 </button>
 
@@ -651,7 +650,7 @@ function MainPage({
                       </div>
                     </div>
                     <div className="flex items-center gap-2 text-[#5c4030]">
-                      <i className="fas fa-lock"></i>
+                      <i className="fa fa-lock"></i>
                       <span className="text-sm font-crimson-text">
                         Secure Payment
                       </span>
@@ -723,14 +722,14 @@ function MainPage({
                   onClick={handleContribute}
                   className="w-full bg-[#8b4513] text-white font-crimson-text text-xl px-8 py-4 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2"
                 >
-                  <i className="fas fa-heart"></i>
+                  <i className="fa fa-heart"></i>
                   Contribute Now
                 </button>
                 <button
                   onClick={() => setShowDonationPopup(false)} 
                   className="w-full bg-[#fff] text-[#8b4513] font-crimson-text text-xl px-8 py-4 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2 border-solid border-2 border-[#8b4513]"
                 >
-                  <i className="fas fa-heart"></i>
+                  <i className="fa fa-heart"></i>
                   Close
                 </button>
               </div>
