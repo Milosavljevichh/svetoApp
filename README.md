@@ -1,8 +1,28 @@
-# React + Vite
+This project was generated from [create.xyz](https://create.xyz/).
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+It is a [Next.js](https://nextjs.org/) project built on React and TailwindCSS.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the code in `src`. The page auto-updates as you edit the file.
+
+To learn more, take a look at the following resources:
+
+- [React Documentation](https://react.dev/) - learn about React
+- [TailwindCSS Documentation](https://tailwindcss.com/) - learn about TailwindCSS
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
