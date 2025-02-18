@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import { useHandleStreamResponse } from "../utilities/runtime-helpers";
 import DonationPage from "./DonatePage/page";
+import { detectLanguageFromIP } from '@/utilities/getLanguageFromIP';
 
 
 function LanguageContextProvider({ children }) {
@@ -18,6 +19,15 @@ function LanguageContextProvider({ children }) {
     el: { name: "Greek", flag: "🇬🇷" },
     bg: { name: "Bulgarian", flag: "🇧🇬" },
   };
+
+  useEffect(() => {
+    const getLanguage = async () => {
+      const lang = await detectLanguageFromIP();
+      setSelectedLanguage(lang);
+    };
+
+    getLanguage();
+  }, []);
 
   return (
     <div className="relative min-h-screen">
