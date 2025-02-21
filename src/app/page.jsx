@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import { useHandleStreamResponse } from "../utilities/runtime-helpers";
 import DonationPage from "./DonatePage/page";
+import { detectLanguageFromIP } from '@/utilities/getLanguageFromIP';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 
 function LanguageContextProvider({ children }) {
@@ -18,6 +20,15 @@ function LanguageContextProvider({ children }) {
     el: { name: "Greek", flag: "🇬🇷" },
     bg: { name: "Bulgarian", flag: "🇧🇬" },
   };
+
+  useEffect(() => {
+    const getLanguage = async () => {
+      const lang = await detectLanguageFromIP();
+      setSelectedLanguage(lang);
+    };
+
+    getLanguage();
+  }, []);
 
   return (
     <div className="relative min-h-screen">
@@ -84,10 +95,10 @@ function MainPage({
   selectedLanguage
 }) {
 
-  useEffect(() => {
-    // Dynamically load the Font Awesome JS script on the client side only
-    import('@fortawesome/fontawesome-free/js/all.js');
-  }, []);
+  // useEffect(() => {
+  //   // Dynamically load the Font Awesome JS script on the client side only
+  //   import('@fortawesome/fontawesome-free/js/all.js');
+  // }, []);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -152,7 +163,7 @@ function MainPage({
         '" "'
       )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
     };
-    return prompts[language] || prompts.en;
+    return prompts[language];
   };
 
   const generateDailyPrayer = async () => {
@@ -183,6 +194,7 @@ function MainPage({
       setHasGeneratedDailyPrayer(true);
     } catch (err) {
       setError("Failed to generate daily prayer. Please try again.");
+      console.log(err)
     } finally {
       setIsLoading(false);
     }
@@ -218,10 +230,10 @@ function MainPage({
             },
             {
               role: "user",
-              content: content || generatePrompt(selectedLanguage),
+              content: generatePrompt(selectedLanguage),
             },
           ],
-          stream: true,
+          // stream: true,
         }),
       });
 
@@ -331,8 +343,12 @@ function MainPage({
       text: "Can you explain the importance of the Holy Trinity?",
       icon: "fa fa-cross",
     },
+    {
+      text: "Can you give me a prayer for students?",
+      icon: "fa fa-book",
+    },
   ];
-
+  
   return (
     <>
     <LanguageContextProvider>
@@ -610,6 +626,22 @@ function MainPage({
                   Credit/Debit Card
                 </button>
 
+                <button
+                  onClick={() => setPaymentMethod("qrCode")}
+                  className={`w-full p-4 rounded-lg flex items-center gap-3 transition ${
+                    paymentMethod === "qrCode"
+                      ? "bg-[#8b4513] text-white"
+                      : "bg-white border-2 border-[#8b4513] text-[#8b4513]"
+                  }`}
+                >
+                  <i className="fa fa-qrcode"></i>
+                  QR code
+                </button>
+
+                {paymentMethod === "qrCode" && (
+                  <img src="/images/qrCode.png" alt='wise qr code' className='mx-auto' />
+                )}
+
                 {paymentMethod === "sms" && (
                   <input
                     type="tel"
@@ -658,78 +690,81 @@ function MainPage({
                   </div>
                 )}
 
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    {["5", "10", "20", "50"].map((amount) => (
-                      <button
-                        key={amount}
-                        onClick={() => {
-                          setDonationAmount(amount);
-                          setCustomAmount("");
+                {(paymentMethod === "sms" || paymentMethod === "card") &&
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      {["5", "10", "20", "50"].map((amount) => (
+                        <button
+                          key={amount}
+                          onClick={() => {
+                            setDonationAmount(amount);
+                            setCustomAmount("");
+                          }}
+                          className={`p-4 rounded-lg transition-all ${
+                            donationAmount === amount && !customAmount
+                              ? "bg-[#8b4513] text-white"
+                              : "bg-white border-2 border-[#8b4513] text-[#8b4513]"
+                          }`}
+                        >
+                          €{amount}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#8b4513]">
+                        €
+                      </span>
+                      <input
+                        type="number"
+                        placeholder="Custom Amount"
+                        value={customAmount}
+                        onChange={(e) => {
+                          setCustomAmount(e.target.value);
+                          setDonationAmount(e.target.value);
                         }}
-                        className={`p-4 rounded-lg transition-all ${
-                          donationAmount === amount && !customAmount
-                            ? "bg-[#8b4513] text-white"
-                            : "bg-white border-2 border-[#8b4513] text-[#8b4513]"
-                        }`}
-                      >
-                        €{amount}
-                      </button>
-                    ))}
-                  </div>
+                        min="1"
+                        className="w-full p-4 pl-8 rounded-lg border-2 border-[#8b4513] bg-white font-crimson-text"
+                      />
+                    </div>
 
-                  <div className="relative">
-                    <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#8b4513]">
-                      €
-                    </span>
-                    <input
-                      type="number"
-                      placeholder="Custom Amount"
-                      value={customAmount}
-                      onChange={(e) => {
-                        setCustomAmount(e.target.value);
-                        setDonationAmount(e.target.value);
-                      }}
-                      min="1"
-                      className="w-full p-4 pl-8 rounded-lg border-2 border-[#8b4513] bg-white font-crimson-text"
-                    />
-                  </div>
-
-                  <div className="text-sm text-[#5c4030] font-crimson-text text-center">
-                    {donationAmount && (
-                      <p>
-                        Selected amount: €{customAmount || donationAmount}
-                        {!customAmount && (
-                          <span>
-                            {" "}
-                            -{" "}
-                            {
+                    <div className="text-sm text-[#5c4030] font-crimson-text text-center">
+                      {donationAmount && (
+                        <p>
+                          Selected amount: €{customAmount || donationAmount}
+                          {!customAmount && (
+                            <span>
+                              {" "}
+                              -{" "}
                               {
-                                5: "Supporter",
-                                10: "Benefactor",
-                                20: "Patron",
-                                50: "Guardian",
-                              }[donationAmount]
-                            }
-                          </span>
-                        )}
-                      </p>
-                    )}
+                                {
+                                  5: "Supporter",
+                                  10: "Benefactor",
+                                  20: "Patron",
+                                  50: "Guardian",
+                                }[donationAmount]
+                              }
+                            </span>
+                          )}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
+                }
 
-                <button
-                  onClick={handleContribute}
-                  className="w-full bg-[#8b4513] text-white font-crimson-text text-xl px-8 py-4 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2"
-                >
-                  <i className="fa fa-heart"></i>
-                  Contribute Now
-                </button>
+                {(paymentMethod === "sms" || paymentMethod === "card") &&
+                  <button
+                    onClick={handleContribute}
+                    className="w-full bg-[#8b4513] text-white font-crimson-text text-xl px-8 py-4 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2"
+                  >
+                    <i className="fa fa-heart"></i>
+                    Contribute Now
+                  </button>
+                }
                 <button
                   onClick={() => setShowDonationPopup(false)} 
                   className="w-full bg-[#fff] text-[#8b4513] font-crimson-text text-xl px-8 py-4 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2 border-solid border-2 border-[#8b4513]"
                 >
-                  <i className="fa fa-heart"></i>
                   Close
                 </button>
               </div>

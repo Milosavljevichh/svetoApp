@@ -4,12 +4,19 @@ import React from "react";
 import { useState, useEffect } from "react";import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faUserPlus, faPaperPlane, faBell, faUsers, faPray } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/Header";
+// import('@fortawesome/fontawesome-free/js/all.js');
+import '@fortawesome/fontawesome-free/css/all.css';
+
 
 
 
 function DonationPage() {
 
   const [isMobile, setIsMobile] = useState(false);
+  
+    useEffect(() => {
+      // Dynamically load the Font Awesome JS script on the client side only
+    }, []);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -73,9 +80,9 @@ function DonationPage() {
   return (
     <div className="min-h-screen bg-[#f8f5f0]">
         {!isMobile && <Header />}
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-5xl mx-auto p-6">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-crimson-text text-[#2c1810] mb-6">
+          <h1 className="text-4xl md:text-6xl font-crimson-text text-[#8b4513] mb-6">
             Join Our Orthodox Community
           </h1>
           <p className="text-xl font-crimson-text text-[#5c4030] mb-8">
@@ -86,7 +93,7 @@ function DonationPage() {
 
         <div className="bg-white rounded-lg shadow-xl p-8">
           <div className="flex flex-col md:flex-row gap-8 items-center justify-between mb-12">
-            <div className="flex-1">
+            <div className="flex flex-col flex-1 items-center text-center justify-between">
               <h2 className="text-2xl font-crimson-text text-[#2c1810] mb-4">
                 Support Without Registration
               </h2>
@@ -98,14 +105,14 @@ function DonationPage() {
                 href="/donate"
                 className="inline-flex items-center bg-[#8b4513] text-white px-6 py-3 rounded-lg hover:bg-[#724011] transition-colors font-crimson-text"
               >
-                <FontAwesomeIcon icon={faHeart} />
+                <i className="fas fa-heart mr-2"></i>
                 Make a Donation
               </a>
             </div>
 
             <div className="text-4xl text-[#8b4513] font-crimson-text">OR</div>
 
-            <div className="flex-1">
+            <div className="flex flex-col flex-1 items-center text-center justify-between">
               <h2 className="text-2xl font-crimson-text text-[#2c1810] mb-4">
                 Join Our Community
               </h2>
@@ -116,7 +123,7 @@ function DonationPage() {
                 onClick={() => setShowRegistration(true)}
                 className="inline-flex items-center bg-[#8b4513] text-white px-6 py-3 rounded-lg hover:bg-[#724011] transition-colors font-crimson-text"
               >
-                <FontAwesomeIcon icon={faUserPlus} />
+                <i className="fas fa-user-plus mr-2"></i>
                 Register Now
               </button>
             </div>
@@ -206,7 +213,7 @@ function DonationPage() {
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="p-6">
-            <FontAwesomeIcon icon={faBell} />
+            <i className="fas fa-bell text-3xl text-[#8b4513] mb-4"></i>
               <h4 className="text-xl font-crimson-text text-[#2c1810] mb-2">
                 Stay Updated
               </h4>
@@ -215,7 +222,7 @@ function DonationPage() {
               </p>
             </div>
             <div className="p-6">
-<FontAwesomeIcon icon={faUsers} />
+            <i className="fas fa-users text-3xl text-[#8b4513] mb-4"></i>
 
               <h4 className="text-xl font-crimson-text text-[#2c1810] mb-2">
                 Connect
@@ -225,7 +232,7 @@ function DonationPage() {
               </p>
             </div>
             <div className="p-6">
-            <FontAwesomeIcon icon={faPray} />
+            <i className="fas fa-pray text-3xl text-[#8b4513] mb-4"></i>
               <h4 className="text-xl font-crimson-text text-[#2c1810] mb-2">
                 Spiritual Growth
               </h4>
