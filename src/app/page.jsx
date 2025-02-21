@@ -163,7 +163,7 @@ function MainPage({
         '" "'
       )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
     };
-    return prompts[language] || prompts.en;
+    return prompts[language];
   };
 
   const generateDailyPrayer = async () => {
@@ -194,6 +194,7 @@ function MainPage({
       setHasGeneratedDailyPrayer(true);
     } catch (err) {
       setError("Failed to generate daily prayer. Please try again.");
+      console.log(err)
     } finally {
       setIsLoading(false);
     }
@@ -229,10 +230,10 @@ function MainPage({
             },
             {
               role: "user",
-              content: content || generatePrompt(selectedLanguage),
+              content: generatePrompt(selectedLanguage),
             },
           ],
-          stream: true,
+          // stream: true,
         }),
       });
 
@@ -341,6 +342,10 @@ function MainPage({
     {
       text: "Can you explain the importance of the Holy Trinity?",
       icon: "fa fa-cross",
+    },
+    {
+      text: "Can you give me a prayer for students?",
+      icon: "fa fa-book",
     },
   ];
   
