@@ -6,6 +6,7 @@ import { faHeart, faUserPlus, faPaperPlane, faBell, faUsers, faPray } from "@for
 import Header from "../components/Header";
 // import('@fortawesome/fontawesome-free/js/all.js');
 import '@fortawesome/fontawesome-free/css/all.css';
+import PaymentForm from '../components/PaymentForm';
 
 
 
@@ -81,6 +82,7 @@ function DonationPage() {
     <div className="min-h-screen bg-[#f8f5f0]">
         {!isMobile && <Header />}
       <div className="max-w-5xl mx-auto p-6">
+        <PaymentForm />
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-crimson-text text-[#8b4513] mb-6">
             Join Our Orthodox Community

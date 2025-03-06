@@ -166,6 +166,7 @@ function MainPage({
     return prompts[language];
   };
 
+
   const generateDailyPrayer = async () => {
     setIsLoading(true);
     try {
