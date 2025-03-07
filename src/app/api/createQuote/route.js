@@ -19,7 +19,7 @@ export async function POST(req) {
                 sourceAmount: amount,
                 rateType: "FIXED",
                 type: "BALANCE_PAYOUT",
-                profile:process.env.WISE_PROFILE_ID
+                profile:process.env.WISE_RECIPIENT_ID
             },
             {
                 headers: {
@@ -30,11 +30,13 @@ export async function POST(req) {
         );
 
         // Check if quote was received successfully
+        const quoteId = quoteResponse.data.id;
+        console.log("Quote created:", quoteId);
         const quote = quoteResponse.data;
         if (!quote) {
             return NextResponse.json({ error: "Failed to get quote" }, { status: 500 });
         }
-
+        console.log(quote)
         return NextResponse.json({ quote });
     } catch (error) {
         console.error("Wise API Error:", error.response?.data || error.message);
