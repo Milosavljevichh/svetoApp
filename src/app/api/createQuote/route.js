@@ -32,14 +32,42 @@ export async function POST(req) {
         // Check if quote was received successfully
         const quoteId = quoteResponse.data.id;
         console.log("Quote created:", quoteId);
+
         const quote = quoteResponse.data;
+
         if (!quote) {
             return NextResponse.json({ error: "Failed to get quote" }, { status: 500 });
         }
         console.log(quote)
-        return NextResponse.json({ quote });
+        // Step 2: Create a Recipient (if not already created)
+        const recipientResponse = await axios.post(`https://api.sandbox.transferwise.tech/v1/accounts`, {
+            currency: 'EUR',
+            type: 'iban',
+            profile: process.env.WISE_RECIPIENT_ID,
+            details: {
+                legalType: 'PRIVATE',
+                firstName: 'Milos',
+                lastName: 'Milosavljevic',
+                IBAN: 'BE79967040785533', // Replace with actual IBAN
+                accountHolderName: 'Milos Milosavljevic'
+            }
+        }, {
+            headers: { 'Authorization': `Bearer ${process.env.WISE_API_KEY}` }
+        });
+
+        const recipientId = recipientResponse.data.id;
+        console.log("Recipient created:", recipientId);
+
+        const recipient = recipientResponse.data;
+
+        if (!recipient) {
+            return NextResponse.json({ error: "Failed to get recipient" }, { status: 500 });
+        }
+        console.log(recipient)
+
+        return NextResponse.json({ quote, recipient });
     } catch (error) {
         console.error("Wise API Error:", error.response?.data || error.message);
-        return NextResponse.json({ error: "Failed to create quote", details: error.response?.data || error.message }, { status: 500 });
+        return NextResponse.json({ details: error.response?.data || error.message }, { status: 500 });
     }
 }
