@@ -45,7 +45,7 @@ const PaymentForm = ({setShowDonationPopup}) => {
 
             if (!data || data.error) throw new Error(data.error || "Payment failed");
 
-            alert("Payment created successfully!");
+            alert("Payment created successfully! Please fund it through your wise dashboard.");
         } catch (err) {
             setError(err.message);
             console.error("Payment failed", err.response?.data || err);

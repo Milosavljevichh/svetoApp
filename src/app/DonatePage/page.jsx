@@ -14,6 +14,7 @@ import PaymentForm from '../components/PaymentForm';
 function DonationPage() {
 
   const [isMobile, setIsMobile] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
     useEffect(() => {
       // Dynamically load the Font Awesome JS script on the client side only
@@ -78,11 +79,15 @@ function DonationPage() {
     }
   };
 
+  function showDonationForm(){
+    setIsDropdownOpen(true)
+  }
+
   return (
     <div className="min-h-screen bg-[#f8f5f0]">
+        {isDropdownOpen && <PaymentForm setShowDonationPopup={setIsDropdownOpen} />}
         {!isMobile && <Header />}
       <div className="max-w-5xl mx-auto p-6">
-        <PaymentForm />
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-crimson-text text-[#8b4513] mb-6">
             Join Our Orthodox Community
@@ -103,13 +108,13 @@ function DonationPage() {
                 Make a direct contribution to support our mission without
                 creating an account
               </p>
-              <a
-                href="/donate"
+              <button
                 className="inline-flex items-center bg-[#8b4513] text-white px-6 py-3 rounded-lg hover:bg-[#724011] transition-colors font-crimson-text"
+                onClick={()=>showDonationForm()}
               >
                 <i className="fas fa-heart mr-2"></i>
                 Make a Donation
-              </a>
+              </button>
             </div>
 
             <div className="text-4xl text-[#8b4513] font-crimson-text">OR</div>

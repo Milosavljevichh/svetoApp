@@ -3,6 +3,7 @@ import axios from "axios";
 
 export async function POST(req) {
     console.log("WISE_API_KEY:", process.env.WISE_API_KEY ? "Loaded" : "Not Loaded");
+
     try {
         const { sourceCurrency, targetCurrency, amount } = await req.json();
 
@@ -10,16 +11,17 @@ export async function POST(req) {
         if (!sourceCurrency || !targetCurrency || !amount) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
-        // Create a quote request to get the quote from Wise
+
+        // Step 1: Create a Quote
         const quoteResponse = await axios.post(
-            "https://api.sandbox.transferwise.tech/v1/quotes", // Wise sandbox endpoint
+            `https://api.sandbox.transferwise.tech/v3/profiles/${process.env.WISE_RECIPIENT_ID}/quotes`,
             {
-                source: sourceCurrency,
-                target: targetCurrency,
+                sourceCurrency,
+                targetCurrency,
                 sourceAmount: amount,
                 rateType: "FIXED",
-                type: "BALANCE_PAYOUT",
-                profile:process.env.WISE_RECIPIENT_ID
+                preferredPayIn: "CARD", // Set to "CARD" so users can pay via credit/debit card
+                profile: process.env.WISE_RECIPIENT_ID,
             },
             {
                 headers: {
@@ -29,45 +31,62 @@ export async function POST(req) {
             }
         );
 
-        // Check if quote was received successfully
         const quoteId = quoteResponse.data.id;
         console.log("Quote created:", quoteId);
+        console.log("Quote data:", quoteResponse.data);
 
-        const quote = quoteResponse.data;
-
-        if (!quote) {
-            return NextResponse.json({ error: "Failed to get quote" }, { status: 500 });
-        }
-        console.log(quote)
-        // Step 2: Create a Recipient (if not already created)
-        const recipientResponse = await axios.post(`https://api.sandbox.transferwise.tech/v1/accounts`, {
-            currency: 'EUR',
-            type: 'iban',
-            profile: process.env.WISE_RECIPIENT_ID,
-            details: {
-                legalType: 'PRIVATE',
-                firstName: 'Milos',
-                lastName: 'Milosavljevic',
-                IBAN: 'BE79967040785533', // Replace with actual IBAN
-                accountHolderName: 'Milos Milosavljevic'
+        // Step 2: Create a Recipient
+        const recipientResponse = await axios.post(
+            `https://api.sandbox.transferwise.tech/v1/accounts`,
+            {
+                accountHolderName: "Milos Milosavljevic",
+                currency: "EUR",
+                type: "iban",
+                profile: process.env.WISE_RECIPIENT_ID,
+                details: {
+                    legalType: "PRIVATE",
+                    firstName: "Milos",
+                    lastName: "Milosavljevic",
+                    IBAN: "BE79967040785533", // Replace with actual IBAN
+                },
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.WISE_API_KEY}`,
+                    "Content-Type": "application/json",
+                },
             }
-        }, {
-            headers: { 'Authorization': `Bearer ${process.env.WISE_API_KEY}` }
-        });
+        );
 
         const recipientId = recipientResponse.data.id;
         console.log("Recipient created:", recipientId);
 
-        const recipient = recipientResponse.data;
+        // Step 3: Create a Transfer
+        const transferResponse = await axios.post(
+            `https://api.sandbox.transferwise.tech/v1/transfers`,
+            {
+                targetAccount: recipientId,
+                quoteUuid: quoteId,
+                customerTransactionId: crypto.randomUUID(), // Generates a unique transaction ID
+                details: {
+                    reference: "Donation",
+                },
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.WISE_API_KEY}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
 
-        if (!recipient) {
-            return NextResponse.json({ error: "Failed to get recipient" }, { status: 500 });
-        }
-        console.log(recipient)
+        const transferId = transferResponse.data.id;
+        console.log("Transfer created:", transferId);
 
-        return NextResponse.json({ quote, recipient });
+        return NextResponse.json({ quoteId, recipientId, transferId });
     } catch (error) {
         console.error("Wise API Error:", error.response?.data || error.message);
-        return NextResponse.json({ details: error.response?.data || error.message }, { status: 500 });
+        return NextResponse.json({ error: error.response?.data || error.message }, { status: 500 });
     }
 }
+ 
