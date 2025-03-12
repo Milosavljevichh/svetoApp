@@ -33,7 +33,9 @@ function MainPage({
     prayer: "fa fa-praying-hands",
   };
 
-  const [content, setContent] = useState(initialContent);
+  const [userContent, setUserContent] = useState("");
+  const [textAreaContent, setTextAreaContent] = useState("");
+  const [promptContent, setPromptContent] = useState(initialContent);
   const [isLoading, setIsLoading] = useState(false);
   const [icon, setIcon] = useState("cross");
   const [error, setError] = useState("");
@@ -50,7 +52,7 @@ function MainPage({
         ...prev,
         { role: "assistant", content: processedMessage },
       ]);
-      setContent(processedMessage);
+      setPromptContent(processedMessage);
       setStreamingMessage("");
     },
   });
@@ -112,8 +114,7 @@ function MainPage({
         '" "'
       )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
     };
-    return (content  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Please respond in" + prompts[language]);
-    return prompts[language];
+    return (userContent  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Please respond in" + prompts[language]);
   };
 
 
@@ -151,7 +152,7 @@ function MainPage({
       if (!response.ok) throw new Error("Failed to generate response");
       await handleStreamResponse(response);
 
-      const newContent = error || streamingMessage || content;
+      const newContent = error || streamingMessage || promptContent;
       setPreviousContent((prev) => {
         const updated = [...prev, newContent];
         return updated.slice(-5);
@@ -171,7 +172,7 @@ function MainPage({
   const [showCopySuccess, setShowCopySuccess] = useState(false);
 
   const handleShare = async (platform) => {
-    const shareText = error || streamingMessage || content;
+    const shareText = error || streamingMessage || promptContent;
     const shareUrl = window.location.href;
 
     switch (platform) {
@@ -256,6 +257,12 @@ function MainPage({
   function changeLanguage(lang){
     setSelectedLanguage(lang)
   }
+
+  useEffect(()=>{
+    if (userContent) {
+      refreshContent()
+    }
+  }, [userContent])
   
   return (
     <>
@@ -305,7 +312,7 @@ function MainPage({
             >
               <i className={`${icons[icon]} text-2xl text-[#8b4513]`}></i>
               <p className="text-xl font-crimson-text text-[#2c1810] select-text cursor-text">
-                {(error || streamingMessage || content)
+                {(error || streamingMessage || promptContent)
                   .split(" ")
                   .map((word, index) => (
                     <span
@@ -340,13 +347,13 @@ function MainPage({
               </p>
             </div>
 
-            <div className="flex justify-center space-x-4 mb-8">
+            <div className="flex justify-center space-x-4 mb-8">  
               <button
                 onClick={() => {
-                  setContent(
+                  setUserContent(
                     "What is the significance of icons in Orthodox Christianity?"
                   );
-                  refreshContent();
+                  setTextAreaContent("")
                 }}
                 className="flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"
               >
@@ -356,8 +363,8 @@ function MainPage({
 
               <button
                 onClick={() => {
-                  setContent("Provide a prayer for healing.");
-                  refreshContent();
+                  setUserContent("Provide a prayer for healing.");
+                  setTextAreaContent("")
                 }}
                 className="flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"
               >
@@ -367,10 +374,10 @@ function MainPage({
 
               <button
                 onClick={() => {
-                  setContent(
+                  setUserContent(
                     "Explain the importance of fasting in the Orthodox tradition."
                   );
-                  refreshContent();
+                  setTextAreaContent("")
                 }}
                 className="flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"
               >
@@ -383,12 +390,15 @@ function MainPage({
               <div className="relative">
                 <textarea
                   placeholder="Pray with me or ask about Orthodox Christianity..."
-                  // value={content}
-                  onChange={(e) => setContent(e.target.value)}
+                  onChange={(e) => setTextAreaContent(e.target.value)}
+                  value={textAreaContent}
                   className="w-full p-4 pr-12 rounded-lg border-2 border-[#8b4513] bg-white font-crimson-text text-[#2c1810] min-h-[100px] resize-none transition-all focus:border-[#6b3410] focus:ring-2 focus:ring-[#8b4513] focus:ring-opacity-50"
                 />
                 <button
-                  onClick={refreshContent}
+                  onClick={() => {
+                    setUserContent(textAreaContent)
+                    setTextAreaContent("")
+                  }}
                   disabled={isLoading}
                   className="absolute right-3 bottom-3 bg-[#8b4513] text-white p-2 rounded-lg transform transition hover:scale-105 flex items-center justify-center"
                   aria-label="Submit question"
@@ -402,8 +412,8 @@ function MainPage({
                   <button
                     key={index}
                     onClick={() => {
-                      setContent(question.text); // Set the content to the question text
-                      refreshContent(); // Trigger the API request
+                      setUserContent(question.text); // Set the content to the question text
+                      setTextAreaContent("")
                     }}
                     className="text-left p-3 rounded-lg border-2 border-[#8b4513] text-[#8b4513] hover:bg-[#8b4513] hover:text-white transition-colors flex items-center gap-2 font-crimson-text"
                   >
