@@ -3,8 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { detectLanguageFromIP } from '@/utilities/getLanguageFromIP';
 
-function LanguageContextProvider({ children }) {
-    const [selectedLanguage, setSelectedLanguage] = useState("en");
+function LanguageContextProvider({ children, selectedLanguage, changeLanguage }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
     const languages = {
@@ -18,7 +17,7 @@ function LanguageContextProvider({ children }) {
     useEffect(() => {
       const getLanguage = async () => {
         const lang = await detectLanguageFromIP();
-        setSelectedLanguage(lang);
+        changeLanguage(lang);
       };
   
       getLanguage();
@@ -60,7 +59,7 @@ function LanguageContextProvider({ children }) {
                     <button
                       key={code}
                       onClick={() => {
-                        setSelectedLanguage(code);
+                        changeLanguage(code);
                         setIsDropdownOpen(false);
                       }}
                       className={`w-full px-4 py-3 text-left flex items-center gap-2 hover:bg-[#8b4513] hover:text-white transition-colors ${

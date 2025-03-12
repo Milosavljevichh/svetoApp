@@ -10,11 +10,11 @@ import PaymentForm from './components/PaymentForm';
 import LanguageContextProvider from './components/LanguageProvider';
 
 function MainPage({
-  initialContent = "Welcome to your daily spiritual guide. Let me begin with a prayer for you.",
-  selectedLanguage
+  initialContent = "Welcome to your daily spiritual guide. Let me begin with a prayer for you."
 }) {
 
   const [isMobile, setIsMobile] = useState(false);
+      const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -26,6 +26,12 @@ function MainPage({
 
     return () => window.removeEventListener("resize", checkScreenSize); // Cleanup
   }, []);
+
+  const icons = {
+    cross: "fa fa-cross",
+    book: "fa fa-book-bible",
+    prayer: "fa fa-praying-hands",
+  };
 
   const [content, setContent] = useState(initialContent);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,36 +55,9 @@ function MainPage({
     },
   });
 
-  const icons = {
-    cross: "fa fa-cross",
-    book: "fa fa-book-bible",
-    prayer: "fa fa-praying-hands",
-  };
-
   const [previousContent, setPreviousContent] = useState([initialContent]);
   const [dailyPrayer, setDailyPrayer] = useState("");
   const [hasGeneratedDailyPrayer, setHasGeneratedDailyPrayer] = useState(false);
-
-  const generatePrompt = (language) => {
-    const prompts = {
-      en: `Generate a unique Orthodox Christian prayer, Bible verse, or spiritual reflection in English that is different from these previous ones: "${previousContent.join(
-        '" "'
-      )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
-      sr: `Generate a unique Orthodox Christian prayer, Bible verse, or spiritual reflection in Serbian that is different from these previous ones: "${previousContent.join(
-        '" "'
-      )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
-      ru: `Generate a unique Orthodox Christian prayer, Bible verse, or spiritual reflection in Russian that is different from these previous ones: "${previousContent.join(
-        '" "'
-      )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
-      el: `Generate a unique Orthodox Christian prayer, Bible verse, or spiritual reflection in Greek that is different from these previous ones: "${previousContent.join(
-        '" "'
-      )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
-      bg: `Generate a unique Orthodox Christian prayer, Bible verse, or spiritual reflection in Bulgarian that is different from these previous ones: "${previousContent.join(
-        '" "'
-      )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
-    };
-    return prompts[language];
-  };
 
 
   const generateDailyPrayer = async () => {
@@ -103,23 +82,40 @@ function MainPage({
           stream: true,
         }),
       });
-
+  
       if (!response.ok) throw new Error("Failed to generate daily prayer");
       await handleStreamResponse(response);
       setHasGeneratedDailyPrayer(true);
     } catch (err) {
       setError("Failed to generate daily prayer. Please try again.");
-      console.log(err)
+      console.log(err);
     } finally {
       setIsLoading(false);
     }
-  };
+  }; 
 
   useEffect(() => {
     if (!hasGeneratedDailyPrayer) {
       generateDailyPrayer();
     }
   }, []);
+
+  const generatePrompt = (language) => {
+    const prompts = {
+      en: `English`,
+      sr: `Serbian`,
+      ru: `Russian`,
+      el: `Generate a unique Orthodox Christian prayer, Bible verse, or spiritual reflection in Greek that is different from these previous ones: "${previousContent.join(
+        '" "'
+      )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
+      bg: `Generate a unique Orthodox Christian prayer, Bible verse, or spiritual reflection in Bulgarian that is different from these previous ones: "${previousContent.join(
+        '" "'
+      )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
+    };
+    return (content  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Please respond in" + prompts[language]);
+    return prompts[language];
+  };
+
 
   const refreshContent = async () => {
     setIsLoading(true);
@@ -148,7 +144,7 @@ function MainPage({
               content: generatePrompt(selectedLanguage),
             },
           ],
-          // stream: true,
+          stream: true,
         }),
       });
 
@@ -162,6 +158,7 @@ function MainPage({
       });
     } catch (err) {
       setError("Failed to generate response. Please try again.");
+      console.log(err)
     } finally {
       setIsLoading(false);
     }
@@ -255,10 +252,14 @@ function MainPage({
       icon: "fa fa-book",
     },
   ];
+
+  function changeLanguage(lang){
+    setSelectedLanguage(lang)
+  }
   
   return (
     <>
-    <LanguageContextProvider>
+    <LanguageContextProvider selectedLanguage={selectedLanguage} changeLanguage={changeLanguage}>
     <Header />
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <div className="max-w-4xl w-full text-center space-y-8">
@@ -294,9 +295,6 @@ function MainPage({
                 }`}
               >
                 <i className="fa fa-pray text-2xl text-[#8b4513] mb-4"></i>
-                <p className="text-xl font-crimson-text text-[#2c1810]">
-                  {dailyPrayer || streamingMessage || initialContent}
-                </p>
               </div>
             </div>
 
@@ -385,7 +383,7 @@ function MainPage({
               <div className="relative">
                 <textarea
                   placeholder="Pray with me or ask about Orthodox Christianity..."
-                  value={content}
+                  // value={content}
                   onChange={(e) => setContent(e.target.value)}
                   className="w-full p-4 pr-12 rounded-lg border-2 border-[#8b4513] bg-white font-crimson-text text-[#2c1810] min-h-[100px] resize-none transition-all focus:border-[#6b3410] focus:ring-2 focus:ring-[#8b4513] focus:ring-opacity-50"
                 />
