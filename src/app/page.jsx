@@ -8,6 +8,7 @@ import DonationPage from "./DonatePage/page";
 import '@fortawesome/fontawesome-free/css/all.css';
 import PaymentForm from './components/PaymentForm';
 import LanguageContextProvider from './components/LanguageProvider';
+import TextToSpeech from './components/TTS';
 
 function MainPage({
   initialContent = "Welcome to your daily spiritual guide. Let me begin with a prayer for you."
@@ -413,20 +414,7 @@ function MainPage({
                 <i className="fa fa-book-reader"></i>
                 <span>About Fasting</span>
               </button>
-              <button
-                onClick={() => {generateTTS(promptContent)}}
-                disabled={isLoading}
-                className="bg-[#8b4513] text-white p-2 rounded-lg transform transition hover:scale-105 flex items-center justify-center"
-                aria-label="Submit question"
-              >
-                {!isAudioLoading && !isLoading ? <>Text to speech <i className="ml-2 fa-solid fa-volume-high"></i></> : "Loading..."}
-              </button>
-              {audioUrl && (
-                <audio controls autoPlay>
-                  <source src={audioUrl} type="audio/mpeg" />
-                  Your browser does not support the audio element.
-                </audio>
-              )}
+              <TextToSpeech text={promptContent} isAudioLoading={isAudioLoading} isLoading={isLoading} />
             </div>
 
             <div className="flex flex-col space-y-4 w-full max-w-2xl mx-auto">
