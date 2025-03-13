@@ -115,7 +115,7 @@ function MainPage({
         '" "'
       )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
     };
-    return (userContent  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Please respond in" + prompts[language]);
+    return (userContent  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Please respond in " + prompts[language] + "but respond using latin letters");
   };
 
 
@@ -414,7 +414,7 @@ function MainPage({
                 <i className="fa fa-book-reader"></i>
                 <span>About Fasting</span>
               </button>
-              <TextToSpeech text={promptContent} isAudioLoading={isAudioLoading} isLoading={isLoading} />
+              <TextToSpeech selectedLanguage={selectedLanguage} text={promptContent} isAudioLoading={isAudioLoading} isLoading={isLoading} />
             </div>
 
             <div className="flex flex-col space-y-4 w-full max-w-2xl mx-auto">
@@ -443,7 +443,7 @@ function MainPage({
                   <button
                     key={index}
                     onClick={() => {
-                      setUserContent(question.text); // Set the content to the question text
+                      setUserContent(question.text); 
                       setTextAreaContent("")
                     }}
                     className="text-left p-3 rounded-lg border-2 border-[#8b4513] text-[#8b4513] hover:bg-[#8b4513] hover:text-white transition-colors flex items-center gap-2 font-crimson-text"
