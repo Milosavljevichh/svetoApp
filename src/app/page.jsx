@@ -263,6 +263,35 @@ function MainPage({
       refreshContent()
     }
   }, [userContent])
+
+  const [audioUrl, setAudioUrl] = useState(null);
+  const [isAudioLoading, setIsAudioLoading] = useState(false);
+
+  const generateTTS = async (text) => {
+    setIsAudioLoading(true);
+  
+    try {
+      const response = await fetch("/api/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("TTS request failed");
+      }
+  
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      audio.play();
+  
+    } catch (error) {
+      console.error("Error generating TTS:", error);
+    }
+  
+    setIsAudioLoading(false);
+  };
   
   return (
     <>
@@ -384,6 +413,20 @@ function MainPage({
                 <i className="fa fa-book-reader"></i>
                 <span>About Fasting</span>
               </button>
+              <button
+                onClick={() => {generateTTS(promptContent)}}
+                disabled={isLoading}
+                className="bg-[#8b4513] text-white p-2 rounded-lg transform transition hover:scale-105 flex items-center justify-center"
+                aria-label="Submit question"
+              >
+                {!isAudioLoading && !isLoading ? <>Text to speech <i className="ml-2 fa-solid fa-volume-high"></i></> : "Loading..."}
+              </button>
+              {audioUrl && (
+                <audio controls autoPlay>
+                  <source src={audioUrl} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
+              )}
             </div>
 
             <div className="flex flex-col space-y-4 w-full max-w-2xl mx-auto">
