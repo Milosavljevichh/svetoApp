@@ -12,6 +12,22 @@ export async function POST(req) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
 
+        const accountsResponse = await axios.post(
+            `https://api.sandbox.transferwise.tech/oauth/token`,
+                {
+                headers: {
+                    Authorization: `Bearer ${process.env.WISE_API_KEY}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
+            }
+        )
+        .then(response => {
+          console.log('Profiles:', response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching profiles:', error);
+        });
+
         // Step 1: Create a Quote
         const quoteResponse = await axios.post(
             `https://api.sandbox.transferwise.tech/v3/profiles/${process.env.WISE_RECIPIENT_ID}/quotes`,
@@ -20,7 +36,7 @@ export async function POST(req) {
                 targetCurrency,
                 sourceAmount: amount,
                 rateType: "FIXED",
-                preferredPayIn: "CARD", // Set to "CARD" so users can pay via credit/debit card
+                preferredPayIn: "CARD",
                 profile: process.env.WISE_RECIPIENT_ID,
             },
             {
@@ -32,8 +48,8 @@ export async function POST(req) {
         );
 
         const quoteId = quoteResponse.data.id;
-        console.log("Quote created:", quoteId);
-        console.log("Quote data:", quoteResponse.data);
+        // console.log("Quote created:", quoteId);
+        // console.log("Quote data:", quoteResponse.data);
 
         // Step 2: Create a Recipient
         const recipientResponse = await axios.post(
@@ -59,7 +75,7 @@ export async function POST(req) {
         );
 
         const recipientId = recipientResponse.data.id;
-        console.log("Recipient created:", recipientId);
+        // console.log("Recipient created:", recipientId);
 
         // Step 3: Create a Transfer
         const transferResponse = await axios.post(
@@ -81,7 +97,7 @@ export async function POST(req) {
         );
 
         const transferId = transferResponse.data.id;
-        console.log("Transfer created:", transferId);
+        // console.log("Transfer created:", transferId);
 
         return NextResponse.json({ quoteId, recipientId, transferId });
     } catch (error) {
