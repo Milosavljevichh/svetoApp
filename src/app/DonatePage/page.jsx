@@ -7,6 +7,7 @@ import Header from "../components/Header";
 // import('@fortawesome/fontawesome-free/js/all.js');
 import '@fortawesome/fontawesome-free/css/all.css';
 import PaymentForm from '../components/PaymentForm';
+import CommunityPrompt from '../components/CommunityPrompt';
 
 
 
@@ -15,6 +16,7 @@ function DonationPage() {
 
   const [isMobile, setIsMobile] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isCommunityPopupOpen, setIsCommunityPopupOpen] = useState(false);
   
     useEffect(() => {
       // Dynamically load the Font Awesome JS script on the client side only
@@ -31,7 +33,6 @@ function DonationPage() {
     return () => window.removeEventListener("resize", checkScreenSize); // Cleanup
   }, []);
 
-  const [showRegistration, setShowRegistration] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -79,13 +80,10 @@ function DonationPage() {
     }
   };
 
-  function showDonationForm(){
-    setIsDropdownOpen(true)
-  }
-
   return (
     <div className="min-h-screen bg-[#f8f5f0]">
         {isDropdownOpen && <PaymentForm setShowDonationPopup={setIsDropdownOpen} />}
+        {isCommunityPopupOpen && <CommunityPrompt setShowPopup={setIsCommunityPopupOpen} />}
         {!isMobile && <Header />}
       <div className="max-w-5xl mx-auto p-6">
         <div className="text-center mb-12">
@@ -110,7 +108,7 @@ function DonationPage() {
               </p>
               <button
                 className="inline-flex items-center bg-[#8b4513] text-white px-6 py-3 rounded-lg hover:bg-[#724011] transition-colors font-crimson-text"
-                onClick={()=>showDonationForm()}
+                onClick={()=>setIsDropdownOpen(true)}
               >
                 <i className="fas fa-heart mr-2"></i>
                 Make a Donation
@@ -127,7 +125,7 @@ function DonationPage() {
                 Register to receive updates and connect with our community
               </p>
               <button
-                onClick={() => setShowRegistration(true)}
+                onClick={() => setIsCommunityPopupOpen(true)}
                 className="inline-flex items-center bg-[#8b4513] text-white px-6 py-3 rounded-lg hover:bg-[#724011] transition-colors font-crimson-text"
               >
                 <i className="fas fa-user-plus mr-2"></i>
@@ -136,7 +134,7 @@ function DonationPage() {
             </div>
           </div>
 
-          {showRegistration && (
+          {/* {showRegistration && (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <input
@@ -201,7 +199,7 @@ function DonationPage() {
                 )}
               </button>
             </form>
-          )}
+          )} */}
         </div>
 
         {notification.show && (

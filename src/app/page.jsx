@@ -108,12 +108,8 @@ function MainPage({
       en: `English`,
       sr: `Serbian`,
       ru: `Russian`,
-      el: `Generate a unique Orthodox Christian prayer, Bible verse, or spiritual reflection in Greek that is different from these previous ones: "${previousContent.join(
-        '" "'
-      )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
-      bg: `Generate a unique Orthodox Christian prayer, Bible verse, or spiritual reflection in Bulgarian that is different from these previous ones: "${previousContent.join(
-        '" "'
-      )}". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not repeat any previous content.`,
+      el: "Greek",
+      bg: "Bulgarian"
     };
     return (userContent  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Please respond in " + prompts[language] + "but respond using latin letters");
   };
@@ -512,7 +508,7 @@ function MainPage({
                 Support Our Mission
               </button>
               <a
-                href="/donate"
+                href="/DonatePage"
                 className="text-[#8b4513] hover:text-[#2c1810] transition-colors font-crimson-text text-lg underline decoration-1 underline-offset-4"
               >
                 Find out More
