@@ -17,6 +17,11 @@ function DonationPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCommunityPopupOpen, setIsCommunityPopupOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+
+  function changeLanguage(lang){
+    setSelectedLanguage(lang)
+  }
   
     useEffect(() => {
       // Dynamically load the Font Awesome JS script on the client side only
@@ -84,7 +89,7 @@ function DonationPage() {
     <div className="min-h-screen bg-[#f8f5f0]">
         {isDropdownOpen && <PaymentForm setShowDonationPopup={setIsDropdownOpen} />}
         {isCommunityPopupOpen && <CommunityPrompt setShowPopup={setIsCommunityPopupOpen} />}
-        {!isMobile && <Header />}
+        {!isMobile && <Header selectedLanguage={selectedLanguage} changeLanguage={changeLanguage} />}
       <div className="max-w-5xl mx-auto p-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-crimson-text text-[#8b4513] mb-6">

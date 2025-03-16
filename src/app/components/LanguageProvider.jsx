@@ -24,15 +24,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
     }, []);
   
     return (
-      <div className="relative min-h-screen"> 
-        <div className="fixed inset-0 z-0">
-          <img
-            src="https://ucarecdn.com/2378599d-07bd-4033-851d-f94d7cb32508/-/format/auto/"
-            alt="Orthodox background with religious imagery"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[#f8f5f0] bg-opacity-90"></div>
-        </div>
+      <div> 
         <div className="absolute top-4 right-4 z-20">
           <div className="relative">
             <button

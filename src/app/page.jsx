@@ -292,12 +292,11 @@ function MainPage({
   
   return (
     <>
-    <LanguageContextProvider selectedLanguage={selectedLanguage} changeLanguage={changeLanguage}>
-    <Header />
-      <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <Header selectedLanguage={selectedLanguage} changeLanguage={changeLanguage} />
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-[#f8f5f0]">
         <div className="max-w-4xl w-full text-center space-y-8">
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-6xl font-crimson-text text-[#8b4513]">
+            <h1 className="text-4xl md:text-6xl font-crimson-text text-[#8b4513] mt-4">
               Orthodox Christianity
             </h1>
 
@@ -534,7 +533,6 @@ function MainPage({
         </>
       )}
       {isMobile && <DonationPage />}
-    </LanguageContextProvider>
     </>
   );
 }
