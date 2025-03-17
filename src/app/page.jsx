@@ -42,6 +42,7 @@ function MainPage({
   const [error, setError] = useState("");
   const [streamingMessage, setStreamingMessage] = useState("");
   const [messages, setMessages] = useState([]);
+
   const handleStreamResponse = useHandleStreamResponse({
     onChunk: (message) => {
       const processedMessage = message.replace(/\*\*/g, " ** ");
@@ -114,16 +115,6 @@ function MainPage({
       setIsLoading(false);
     }
   }; 
-
-
-
-  const hasRunRef = useRef(false);
-  useEffect(() => {
-    if (!hasRunRef.current && !isLoading) {
-      generateDailyPrayer();
-      hasRunRef.current = true;
-    }
-  }, []);
 
   const refreshContent = async () => {
     if (isLoading) return;

@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 
 export const config = {
-  matcher: "/integrations/:path*",
+  matcher: [
+    "/integrations/:path*", // Match all paths under /integrations
+    "!/integrations/chat-gpt/conversationgpt4", // Exclude this specific path
+  ],
 };
 
 export function middleware(request) {
