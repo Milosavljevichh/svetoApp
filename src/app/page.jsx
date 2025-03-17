@@ -419,6 +419,13 @@ function MainPage({
                 <textarea
                   placeholder="Pray with me or ask about Orthodox Christianity..."
                   onChange={(e) => setTextAreaContent(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      setUserContent(textAreaContent)
+                      setTextAreaContent("")
+                    }
+                  }}
                   value={textAreaContent}
                   className="w-full p-4 pr-12 rounded-lg border-2 border-[#8b4513] bg-white font-crimson-text text-[#2c1810] min-h-[100px] resize-none transition-all focus:border-[#6b3410] focus:ring-2 focus:ring-[#8b4513] focus:ring-opacity-50"
                 />
