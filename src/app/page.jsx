@@ -62,8 +62,26 @@ function MainPage({
   const [dailyPrayer, setDailyPrayer] = useState("");
   const [hasGeneratedDailyPrayer, setHasGeneratedDailyPrayer] = useState(false);
 
+  
+  const generatePrompt = (language) => {
+    const prompts = {
+      en: `English`,
+      sr: `Serbian`,
+      ru: `Russian`,
+      el: "Greek",
+      bg: "Bulgarian"
+    };
+    return (userContent  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Please respond in " + prompts[language] + "but respond using latin letters");
+  };
+  
+  useEffect(() => {
+    if (!hasGeneratedDailyPrayer) {
+      generateDailyPrayer();
+    }
+  }, []);
 
   const generateDailyPrayer = async () => {
+    if (isLoading) return;
     setIsLoading(true);
     try {
       const response = await fetch("/integrations/chat-gpt/conversationgpt4", {
@@ -97,23 +115,15 @@ function MainPage({
     }
   }; 
 
+
+
+  const hasRunRef = useRef(false);
   useEffect(() => {
-    if (!hasGeneratedDailyPrayer) {
+    if (!hasRunRef.current && !isLoading) {
       generateDailyPrayer();
+      hasRunRef.current = true;
     }
   }, []);
-
-  const generatePrompt = (language) => {
-    const prompts = {
-      en: `English`,
-      sr: `Serbian`,
-      ru: `Russian`,
-      el: "Greek",
-      bg: "Bulgarian"
-    };
-    return (userContent  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Please respond in " + prompts[language] + "but respond using latin letters");
-  };
-
 
   const refreshContent = async () => {
     if (isLoading) return;
