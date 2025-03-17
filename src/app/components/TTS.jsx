@@ -10,7 +10,6 @@ const TextToSpeech = ({ text, isAudioLoading, isLoading, selectedLanguage }) => 
         setPromptLang(selectedLanguage)
     }, [text])
 
-    console.log(promptLang)
     const handleSpeak = () => {
 
         if (text && !isSpeaking) {

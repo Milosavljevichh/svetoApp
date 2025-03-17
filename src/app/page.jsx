@@ -1,7 +1,7 @@
 "use client";
 import './globals.css';
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
 import { useHandleStreamResponse } from "../utilities/runtime-helpers";
 import DonationPage from "./DonatePage/page";
@@ -116,6 +116,7 @@ function MainPage({
 
 
   const refreshContent = async () => {
+    if (isLoading) return;
     setIsLoading(true);
     setError("");
     const randomIcon = Object.keys(icons)[Math.floor(Math.random() * 3)];
