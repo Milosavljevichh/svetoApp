@@ -333,7 +333,7 @@ function MainPage({
             </div>
 
             <div
-              className={`flex items-center justify-center space-x-4 transition-opacity duration-500 mb-8 ${
+              className={`flex items-center justify space-x-4 transition-opacity duration-500 mb-8 ${
                 isLoading ? "opacity-50" : "opacity-100"
               }`}
             >
@@ -374,7 +374,7 @@ function MainPage({
               </p>
             </div>
 
-            <div className="flex justify-center space-x-4 mb-8">  
+            <div className={isMobile ? "flex flex-col justify-center space-x-4 mb-8" : "flex justify-center space-x-4 mb-8"}>  
               <button
                 onClick={() => {
                   setUserContent(
@@ -382,7 +382,7 @@ function MainPage({
                   );
                   setTextAreaContent("")
                 }}
-                className="flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"
+                className={isMobile ? "flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg ml-4" : "flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"}
               >
                 <i className="fa fa-image"></i>
                 <span>About Icons</span>
