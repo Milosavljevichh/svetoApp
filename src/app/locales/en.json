@@ -1,21 +1,51 @@
 {
-    "title": "Orthodox Christianity",
-    "welcome": "Welcome to the platform dedicated to spreading and preserving Orthodox Christianity. Read, listen, and connect with the Word of God in Serbian, Russian, Greek, Bulgarian, and English. Explore biblical prayers, teachings, and sacred texts in both Cyrillic and Latin scripts.",
-    "todaysPrayer": "Today's Prayer",
-    "aboutIcons": "About Icons",
-    "healingPrayer": "Healing Prayer",
-    "aboutFasting": "About Fasting",
-    "tts": "Text to Speech",
-    "placeholder": "Pray with me or ask a question about Orthodox Christianity...",
-    "questions": {
-        "q1": "What does fasting mean in Orthodox tradition?",
-        "q2": "How can I start a prayer life?",
-        "q3": "What is the role of icons in Orthodoxy?",
-        "q4": "Who are the most important saints in the Orthodox Church?",
-        "q5": "Can you explain the significance of the Holy Trinity?",
-        "q6": "Can you give me a prayer for students?"
+    "homePage":{
+        "title": "Orthodox Christianity",
+        "welcome": "Welcome to the platform dedicated to spreading and preserving Orthodox Christianity. Read, listen, and connect with the Word of God in Serbian, Russian, Greek, Bulgarian, and English. Explore biblical prayers, teachings, and sacred texts in both Cyrillic and Latin scripts.",
+        "todaysPrayer": "Today's Prayer",
+        "aboutIcons": "About Icons",
+        "healingPrayer": "Healing Prayer",
+        "aboutFasting": "About Fasting",
+        "tts": "Text to Speech",
+        "placeholder": "Pray with me or ask a question about Orthodox Christianity...",
+        "questions": {
+            "q1": "What does fasting mean in Orthodox tradition?",
+            "q2": "How can I start a prayer life?",
+            "q3": "What is the role of icons in Orthodoxy?",
+            "q4": "Who are the most important saints in the Orthodox Church?",
+            "q5": "Can you explain the significance of the Holy Trinity?",
+            "q6": "Can you give me a prayer for students?"
+        },
+        "share": "Share this prayer",
+        "support": "Support our mission",
+        "more": "Learn more"
     },
-    "share": "Share this prayer",
-    "support": "Support our mission",
-    "more": "Learn more"
+    "donationPage":{
+        "title":"Join Our Orthodox Community",
+        "subtitle":"Your support helps spread the light of Orthodox Christianity worldwide",
+        "support":{
+            "title":"Support Without Registration",
+            "subtitle":"Make a direct contribution to support our mission without creating an account",
+            "CTA":"Make a Donation"
+        },
+        "or": "OR",
+        "community":{
+            "title":"Join Our Community",
+            "subtitle":"Register to receive updates and connect with our community",
+            "CTA":"Register Now"
+        },
+        "whyJoin":{
+            "title":"Why Join Our Community?",
+            "reasonTitles":{
+                "r1":"Stay Updated",
+                "r2":"Connect",
+                "r3":"Spiritual Growth"
+            },
+            "reasonText":{
+                "r1":"Receive notifications about new content and events",
+                "r2":"Join a community of Orthodox Christian supporters",
+                "r3":"Access exclusive spiritual content and resources"
+            }
+        }
+    }
 }

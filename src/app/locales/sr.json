@@ -1,22 +1,52 @@
 {
-    "title": "Pravoslavno Hrišćanstvo",
-    "welcome": "Dobrodošli na platformu posvećenu širenju i očuvanju Pravoslavnog Hrišćanstva. Čitajte, slušajte i povežite se sa Rečju Božijom na srpskom, ruskom, grčkom, bugarskom i engleskom jeziku. Istražite biblijske molitve, učenja i svete tekstove na ćirilici i latinici.",
-    "todaysPrayer": "Današnja molitva",
-    "aboutIcons": "O ikonama",
-    "healingPrayer": "Molitva za isceljenje",
-    "aboutFasting": "O postu",
-    "tts": "Tekst u govor",
-    "placeholder": "Moli se sa mnom ili postavi pitanje o Pravoslavnom Hrišćanstvu...",
-    "questions":{
-        "q1": "Šta znači post u pravoslavnoj tradiciji?",
-        "q2": "Kako mogu započeti molitveni život?",
-        "q3": "Koja je uloga ikona u Pravoslavlju?",
-        "q4": "Ko su najvažniji sveci u Pravoslavnoj Crkvi?",
-        "q5": "Možeš li mi objasniti značaj Svete Trojice?",
-        "q6": "Možeš li mi dati molitvu za studente?"
+    "homePage":{
+        "title": "Pravoslavno Hrišćanstvo",
+        "welcome": "Dobrodošli na platformu posvećenu širenju i očuvanju Pravoslavnog Hrišćanstva. Čitajte, slušajte i povežite se sa Rečju Božijom na srpskom, ruskom, grčkom, bugarskom i engleskom jeziku. Istražite biblijske molitve, učenja i svete tekstove na ćirilici i latinici.",
+        "todaysPrayer": "Današnja molitva",
+        "aboutIcons": "O ikonama",
+        "healingPrayer": "Molitva za isceljenje",
+        "aboutFasting": "O postu",
+        "tts": "Tekst u govor",
+        "placeholder": "Moli se sa mnom ili postavi pitanje o Pravoslavnom Hrišćanstvu...",
+        "questions":{
+            "q1": "Šta znači post u pravoslavnoj tradiciji?",
+            "q2": "Kako mogu započeti molitveni život?",
+            "q3": "Koja je uloga ikona u Pravoslavlju?",
+            "q4": "Ko su najvažniji sveci u Pravoslavnoj Crkvi?",
+            "q5": "Možeš li mi objasniti značaj Svete Trojice?",
+            "q6": "Možeš li mi dati molitvu za studente?"
+        },
+        "share":"Podeli ovu molitvu",
+        "support":"Podrži našu misiju",
+        "more":"Saznaj više"
     },
-    "share":"Podeli ovu molitvu",
-    "support":"Podrži našu misiju",
-    "more":"Saznaj više"
+    "donationPage": {
+        "title": "Pridružite se našoj pravoslavnoj zajednici",
+        "subtitle": "Vaša podrška pomaže u širenju svetlosti pravoslavnog hristijanstva širom sveta",
+        "support": {
+            "title": "Podrška bez registracije",
+            "subtitle": "Napravite direktnu donaciju kako biste podržali našu misiju bez potrebe za kreiranjem naloga",
+            "CTA": "Donirajte"
+        },
+        "or": "ILI",
+        "community": {
+            "title": "Pridružite se našoj zajednici",
+            "subtitle": "Registrujte se da biste primali obaveštenja i povezali se sa našom zajednicom",
+            "CTA": "Registrujte se sada"
+        },
+        "whyJoin": {
+            "title": "Zašto da se pridružite našoj zajednici?",
+            "reasonTitles": {
+                "r1": "Budite u toku",
+                "r2": "Povežite se",
+                "r3": "Duhovni rast"
+            },
+            "reasonText": {
+                "r1": "Primajte obaveštenja o novom sadržaju i događajima",
+                "r2": "Pridružite se zajednici pravoslavnih hrišćanskih podržavalaca",
+                "r3": "Pristupite ekskluzivnom duhovnom sadržaju i resursima"
+            }
+        }
+    }
   }
   

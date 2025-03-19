@@ -55,7 +55,7 @@ const TextToSpeech = ({ text, isAudioLoading, isLoading, selectedLanguage }) => 
                 ${isLoading || promptLang !== "en" ? "bg-gray-400 cursor-not-allowed" : "hover:bg-[#7a3e1e]"}`}
                 aria-label="Submit question"
             >
-                {!isAudioLoading && !isLoading ? <>Text to speech <i className="ml-2 fa-solid fa-volume-high"></i></> : "Loading..."}
+                {!isAudioLoading && !isLoading ? <>{ promptLang === "en" ? "Text to speech" : "Only in english"} <i className="ml-2 fa-solid fa-volume-high"></i></> : "Loading..."}
             </button>
             <button
                 onClick={handleStop}

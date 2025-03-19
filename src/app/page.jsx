@@ -238,27 +238,27 @@ function MainPage({
 
   const suggestedQuestions = [
     {
-      text: t('questions.q1'),
+      text: t('homePage.questions.q1'),
       icon: "fa fa-utensils",
     },
     {
-      text:  t('questions.q2'),
+      text:  t('homePage.questions.q2'),
       icon: "fa fa-pray",
     },
     {
-      text:  t('questions.q3'),
+      text:  t('homePage.questions.q3'),
       icon: "fa fa-image",
     },
     {
-      text:  t('questions.q4'),
+      text:  t('homePage.questions.q4'),
       icon: "fa fa-church",
     },
     {
-      text:  t('questions.q5'),
+      text:  t('homePage.questions.q5'),
       icon: "fa fa-cross",
     },
     {
-      text:  t('questions.q6'),
+      text:  t('homePage.questions.q6'),
       icon: "fa fa-book",
     },
   ];
@@ -318,11 +318,11 @@ function MainPage({
         <div className="max-w-4xl w-full text-center space-y-8 z-10">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-6xl font-crimson-text text-[#8b4513] mt-4">
-              {t('title')}
+              {t('homePage.title')}
             </h1>
 
             <p className="text-xl md:text-2xl font-crimson-text text-[#5c4030] leading-relaxed px-4">
-              {t('welcome')}
+              {t('homePage.welcome')}
             </p>
           </div>
 
@@ -336,7 +336,7 @@ function MainPage({
 
             <div className="mb-8 text-center">
               <h2 className="text-2xl font-crimson-text text-[#2c1810] mb-4">
-                {t('todaysPrayer')}
+                {t('homePage.todaysPrayer')}
               </h2>
               <div
                 className={`transition-opacity duration-500 ${
@@ -400,7 +400,7 @@ function MainPage({
                 className={isMobile ? "flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg ml-4" : "flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"}
               >
                 <i className="fa fa-image"></i>
-                <span>{t('aboutIcons')}</span>
+                <span>{t('homePage.aboutIcons')}</span>
               </button>
 
               <button
@@ -411,7 +411,7 @@ function MainPage({
                 className="flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"
               >
                 <i className="fa fa-pray"></i>
-                <span>{t('healingPrayer')}</span>
+                <span>{t('homePage.healingPrayer')}</span>
               </button>
 
               <button
@@ -424,7 +424,7 @@ function MainPage({
                 className="flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"
               >
                 <i className="fa fa-book-reader"></i>
-                <span>{t('aboutFasting')}</span>
+                <span>{t('homePage.aboutFasting')}</span>
               </button>
             </div>
             <TextToSpeech selectedLanguage={selectedLanguage} text={promptContent} isAudioLoading={isAudioLoading} isLoading={isLoading} />
@@ -432,7 +432,7 @@ function MainPage({
             <div className="flex flex-col space-y-4 w-full max-w-2xl mx-auto">
               <div className="relative">
                 <textarea
-                  placeholder={t('placeholder')}
+                  placeholder={t('homePage.placeholder')}
                   onChange={(e) => setTextAreaContent(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
@@ -476,7 +476,7 @@ function MainPage({
 
             <div className="mt-6 pt-4 border-t border-[#8b4513] border-opacity-20">
               <p className="text-sm font-crimson-text text-[#5c4030] mb-3">
-                {t('share')}
+                {t('homePage.share')}
               </p>
               <div className="flex justify-center items-center space-x-6">
                 <button
@@ -528,13 +528,13 @@ function MainPage({
                 className="bg-[#8b4513] text-white px-8 py-3 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2 mx-auto"
               >
                 <i className="fa fa-heart"></i>
-                {t('support')}
+                {t('homePage.support')}
               </button>
               <a
                 href="/DonatePage"
                 className="text-[#8b4513] hover:text-[#2c1810] transition-colors font-crimson-text text-lg underline decoration-1 underline-offset-4"
               >
-                {t('more')}
+                {t('homePage.more')}
               </a>
             </div>
 
