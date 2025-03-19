@@ -42,6 +42,7 @@ function MainPage({
   const [error, setError] = useState("");
   const [streamingMessage, setStreamingMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [isLanguageLoaded, setIsLanguageLoaded] = useState(false)
 
   const handleStreamResponse = useHandleStreamResponse({
     onChunk: (message) => {
@@ -76,7 +77,7 @@ function MainPage({
   };
   
   useEffect(() => {
-    if (!hasGeneratedDailyPrayer) {
+    if (!hasGeneratedDailyPrayer && isLanguageLoaded) {
       generateDailyPrayer();
     }
   }, []);
@@ -255,6 +256,7 @@ function MainPage({
 
   function changeLanguage(lang){
     setSelectedLanguage(lang)
+    setIsLanguageLoaded(true)
   }
 
   useEffect(()=>{
