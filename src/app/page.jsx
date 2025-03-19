@@ -85,6 +85,7 @@ function MainPage({
   const generateDailyPrayer = async () => {
     if (isLoading) return;
     setIsLoading(true);
+    setUserContent(`Generate today's Orthodox prayer`);
     try {
       const response = await fetch("/integrations/chat-gpt/conversationgpt4", {
         method: "POST",
@@ -99,7 +100,7 @@ function MainPage({
             },
             {
               role: "user",
-              content: `Generate today's Orthodox prayer in ${selectedLanguage}`,
+              content: generatePrompt(selectedLanguage),
             },
           ],
           stream: true,
