@@ -47,5 +47,9 @@
                 "r3":"Access exclusive spiritual content and resources"
             }
         }
+    },
+    "header":{
+        "home":"Home",
+        "donate":"Donate"
     }
 }

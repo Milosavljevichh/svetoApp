@@ -47,6 +47,10 @@
                 "r3": "Pristupite ekskluzivnom duhovnom sadržaju i resursima"
             }
         }
+    },
+    "header": {
+        "home": "Početna",
+        "donate": "Donirajte"
     }
   }
   
