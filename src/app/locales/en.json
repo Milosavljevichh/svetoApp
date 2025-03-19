@@ -51,5 +51,27 @@
     "header":{
         "home":"Home",
         "donate":"Donate"
+    },
+    "paymentForm":{
+        "title":"Choose Payment Method",
+        "options":{
+            "sms":{
+                "title":"Pay via SMS",
+                "placeholder":"Enter your phone number"
+            },
+            "card":{
+                "title":"Credit/Debit Card",
+                "p1":"Cardholder Name",
+                "p2":"Card Number",
+                "p3":"MM/YY",
+                "p4":"CVV",
+                "securePayment":"Secure Payment"
+            },
+            "qrCode":"QR Code"
+        },
+        "customAmount": "Custom Amount",
+        "selectedAmount": "Selected amount:",
+        "CTA":"Contribute",
+        "close":"Close"
     }
 }

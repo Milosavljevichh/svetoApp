@@ -102,7 +102,7 @@ function DonationPage() {
       />
       <div className="absolute inset-0 bg-[#f8f5f0] bg-opacity-90"></div>
     </div>
-        {isDropdownOpen && <PaymentForm setShowDonationPopup={setIsDropdownOpen} />}
+        {isDropdownOpen && <PaymentForm setShowDonationPopup={setIsDropdownOpen} selectedLanguage={selectedLanguage} />}
         {isCommunityPopupOpen && <CommunityPrompt setShowPopup={setIsCommunityPopupOpen} />}
         {!isMobile && <Header selectedLanguage={selectedLanguage} changeLanguage={changeLanguage} />}
       <div className="max-w-5xl mx-auto p-6 z-10 relative">

@@ -51,6 +51,28 @@
     "header": {
         "home": "Početna",
         "donate": "Donirajte"
+    },
+    "paymentForm": {
+        "title": "Izaberite metod plačanja",
+        "options": {
+            "sms": {
+                "title": "Plati putem SMS-a",
+                "placeholder": "Unesite svoj broj telefona"
+            },
+            "card": {
+                "title": "Kreditna/Debitna kartica",
+                "p1": "Ime vlasnika kartice",
+                "p2": "Broj kartice",
+                "p3": "MM/GG",
+                "p4": "CVV",
+                "securePayment": "Sigurno plaćanje"
+            },
+            "qrCode": "QR kod"
+        },
+        "customAmount": "Prilagođeni iznos",
+        "selectedAmount": "Izabrani iznos:",
+        "CTA": "Donirajte",
+        "close": "Zatvori"
     }
   }
   

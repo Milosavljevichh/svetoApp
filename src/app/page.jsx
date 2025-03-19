@@ -553,7 +553,7 @@ function MainPage({
             className="fixed inset-0 bg-black bg-opacity-50 z-40"
             onClick={() => setShowDonationPopup(false)}
           />
-          <PaymentForm setShowDonationPopup={handleShowDonation} />
+          <PaymentForm setShowDonationPopup={handleShowDonation} selectedLanguage={selectedLanguage} />
         </>
       )}
       {isMobile && <DonationPage />}

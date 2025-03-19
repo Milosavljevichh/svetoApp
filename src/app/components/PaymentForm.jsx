@@ -1,7 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { useTranslation } from 'react-i18next';
+import '../i18n/i18n'; // Import the i18n setup
 
-const PaymentForm = ({ setShowDonationPopup }) => {
+const PaymentForm = ({ setShowDonationPopup, selectedLanguage }) => {
+
+  const { t, i18n } = useTranslation();
+    useEffect(() => {
+      i18n.changeLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
   const [details, setDetails] = useState({
     targetAccount: "",
     currency: "EUR",
@@ -63,7 +71,7 @@ const PaymentForm = ({ setShowDonationPopup }) => {
         </button>
 
         <h2 className="text-2xl font-crimson-text text-[#2c1810] mb-6 text-center">
-          Choose Payment Method
+          {t('paymentForm.title')}
         </h2>
 
         <div className="space-y-4">
@@ -76,7 +84,7 @@ const PaymentForm = ({ setShowDonationPopup }) => {
             }`}
           >
             <i className="fa fa-comment-alt"></i>
-            Pay via SMS
+            {t('paymentForm.options.sms.title')}
           </button>
 
           <button
@@ -88,7 +96,7 @@ const PaymentForm = ({ setShowDonationPopup }) => {
             }`}
           >
             <i className="fa fa-credit-card"></i>
-            Credit/Debit Card
+            {t('paymentForm.options.card.title')}
           </button>
 
           <button
@@ -100,7 +108,7 @@ const PaymentForm = ({ setShowDonationPopup }) => {
             }`}
           >
             <i className="fa fa-qrcode"></i>
-            QR code
+            {t('paymentForm.options.qrCode')}
           </button>
 
           {paymentMethod === "qrCode" && (
@@ -110,7 +118,7 @@ const PaymentForm = ({ setShowDonationPopup }) => {
           {paymentMethod === "sms" && (
             <input
               type="tel"
-              placeholder="Enter your phone number"
+              placeholder={t('paymentForm.options.sms.placeholder')}
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               className="w-full p-4 rounded-lg border-2 border-[#8b4513] bg-white font-crimson-text"
@@ -122,25 +130,25 @@ const PaymentForm = ({ setShowDonationPopup }) => {
               <div className="grid grid-cols-1 gap-4">
                 <input
                   type="text"
-                  placeholder="Cardholder Name"
+                  placeholder={t('paymentForm.options.card.p1')}
                   className="w-full p-4 rounded-lg border-2 border-[#8b4513] bg-white font-crimson-text"
                 />
                 <input
                   type="text"
-                  placeholder="Card Number"
+                  placeholder={t('paymentForm.options.card.p2')}
                   className="w-full p-4 rounded-lg border-2 border-[#8b4513] bg-white font-crimson-text"
                   maxLength="19"
                 />
                 <div className="grid grid-cols-2 gap-4">
                   <input
                     type="text"
-                    placeholder="MM/YY"
+                    placeholder={t('paymentForm.options.card.p3')}
                     className="w-full p-4 rounded-lg border-2 border-[#8b4513] bg-white font-crimson-text"
                     maxLength="5"
                   />
                   <input
                     type="text"
-                    placeholder="CVV"
+                    placeholder={t('paymentForm.options.card.p4')}
                     className="w-full p-4 rounded-lg border-2 border-[#8b4513] bg-white font-crimson-text"
                     maxLength="4"
                   />
@@ -148,7 +156,7 @@ const PaymentForm = ({ setShowDonationPopup }) => {
               </div>
               <div className="flex items-center gap-2 text-[#5c4030]">
                 <i className="fa fa-lock"></i>
-                <span className="text-sm font-crimson-text">Secure Payment</span>
+                <span className="text-sm font-crimson-text">{t('paymentForm.options.card.securePayment')}</span>
               </div>
             </div>
           )}
@@ -180,7 +188,7 @@ const PaymentForm = ({ setShowDonationPopup }) => {
                 </span>
                 <input
                   type="number"
-                  placeholder="Custom Amount"
+                  placeholder={t('paymentForm.customAmount')}
                   value={customAmount}
                   onChange={(e) => {
                     setCustomAmount(e.target.value);
@@ -194,7 +202,7 @@ const PaymentForm = ({ setShowDonationPopup }) => {
               <div className="text-sm text-[#5c4030] font-crimson-text text-center">
                 {donationAmount && (
                   <p>
-                    Selected amount: €{customAmount || donationAmount}
+                    {t('paymentForm.selectedAmount')} €{customAmount || donationAmount}
                     {!customAmount && (
                       <span>
                         {" "}
@@ -222,7 +230,7 @@ const PaymentForm = ({ setShowDonationPopup }) => {
               className="w-full bg-[#8b4513] text-white font-crimson-text text-xl px-8 py-4 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2"
             >
               <i className="fa fa-heart"></i>
-              {loading ? "Processing..." : "Contribute Now"}
+              {loading ? "Processing..." : t('paymentForm.CTA')}
             </button>
           )}
 
@@ -230,7 +238,7 @@ const PaymentForm = ({ setShowDonationPopup }) => {
             onClick={() => setShowDonationPopup(false)}
             className="w-full bg-[#fff] text-[#8b4513] font-crimson-text text-xl px-8 py-4 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2 border-solid border-2 border-[#8b4513]"
           >
-            Close
+            {t('paymentForm.close')}
           </button>
 
           {error && <p style={{ color: "red" }}>{error}</p>}
