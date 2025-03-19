@@ -99,7 +99,7 @@ function MainPage({
             },
             {
               role: "user",
-              content: "Generate today's Orthodox prayer",
+              content: `Generate today's Orthodox prayer in ${selectedLanguage}`,
             },
           ],
           stream: true,
