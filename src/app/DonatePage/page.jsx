@@ -87,10 +87,18 @@ function DonationPage() {
 
   return (
     <div className="min-h-screen bg-[#f8f5f0]">
+    <div className="fixed inset-0 z-0 w-full h-full">
+      <img
+        src="https://ucarecdn.com/2378599d-07bd-4033-851d-f94d7cb32508/-/format/auto/"
+        alt="Orthodox background with religious imagery"
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-[#f8f5f0] bg-opacity-90"></div>
+    </div>
         {isDropdownOpen && <PaymentForm setShowDonationPopup={setIsDropdownOpen} />}
         {isCommunityPopupOpen && <CommunityPrompt setShowPopup={setIsCommunityPopupOpen} />}
         {!isMobile && <Header selectedLanguage={selectedLanguage} changeLanguage={changeLanguage} />}
-      <div className="max-w-5xl mx-auto p-6">
+      <div className="max-w-5xl mx-auto p-6 z-10 relative">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-crimson-text text-[#8b4513] mb-6">
             Join Our Orthodox Community

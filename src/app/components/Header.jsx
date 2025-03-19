@@ -3,7 +3,7 @@ import LanguageContextProvider from './LanguageProvider';
 
 const Header = ({selectedLanguage, changeLanguage}) => {
   return (
-    <header className="bg-[#2c1810] text-white p-4 z-2">
+    <header className="bg-[#2c1810] text-white p-4 z-10 relative">
       <nav className="flex items-center px-5">
         <div className="text-2xl font-crimson-text">
           <Link href="/" className="hover:text-[#8b4513]">
