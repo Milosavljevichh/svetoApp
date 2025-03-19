@@ -80,7 +80,7 @@ function MainPage({
     if (!hasGeneratedDailyPrayer && isLanguageLoaded) {
       generateDailyPrayer();
     }
-  }, []);
+  }, [isLanguageLoaded]);
 
   const generateDailyPrayer = async () => {
     if (isLoading) return;
