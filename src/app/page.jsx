@@ -9,13 +9,16 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import PaymentForm from './components/PaymentForm';
 import LanguageContextProvider from './components/LanguageProvider';
 import TextToSpeech from './components/TTS';
+import { useTranslation } from 'react-i18next';
+import './i18n/i18n'; // Import the i18n setup
 
 function MainPage({
   initialContent = "Welcome to your daily spiritual guide. Let me begin with a prayer for you."
 }) {
 
   const [isMobile, setIsMobile] = useState(false);
-      const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -81,6 +84,11 @@ function MainPage({
       generateDailyPrayer();
     }
   }, [isLanguageLoaded]);
+
+  
+  useEffect(() => {
+    i18n.changeLanguage(selectedLanguage);
+  }, [selectedLanguage]);
 
   const generateDailyPrayer = async () => {
     if (isLoading) return;
@@ -230,27 +238,27 @@ function MainPage({
 
   const suggestedQuestions = [
     {
-      text: "What is the meaning of fasting in Orthodox tradition?",
+      text: t('questions.q1'),
       icon: "fa fa-utensils",
     },
     {
-      text: "How can I start a prayer routine?",
+      text:  t('questions.q2'),
       icon: "fa fa-pray",
     },
     {
-      text: "What is the role of icons in Orthodox Christianity?",
+      text:  t('questions.q3'),
       icon: "fa fa-image",
     },
     {
-      text: "Who are the most significant saints in the Orthodox Church?",
+      text:  t('questions.q4'),
       icon: "fa fa-church",
     },
     {
-      text: "Can you explain the importance of the Holy Trinity?",
+      text:  t('questions.q5'),
       icon: "fa fa-cross",
     },
     {
-      text: "Can you give me a prayer for students?",
+      text:  t('questions.q6'),
       icon: "fa fa-book",
     },
   ];
@@ -310,15 +318,11 @@ function MainPage({
         <div className="max-w-4xl w-full text-center space-y-8 z-10">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-6xl font-crimson-text text-[#8b4513] mt-4">
-              Orthodox Christianity
+              {t('title')}
             </h1>
 
             <p className="text-xl md:text-2xl font-crimson-text text-[#5c4030] leading-relaxed px-4">
-              Welcome to the platform dedicated to spreading and preserving
-              Orthodox Christianity. Read, listen, and connect with the Word of
-              God in Serbian, Russian, Greek, Bulgarian, and English. Explore
-              biblical prayers, teachings, and sacred texts in Cyrillic and
-              Latin script.
+              {t('welcome')}
             </p>
           </div>
 
@@ -332,7 +336,7 @@ function MainPage({
 
             <div className="mb-8 text-center">
               <h2 className="text-2xl font-crimson-text text-[#2c1810] mb-4">
-                Today's Prayer
+                {t('todaysPrayer')}
               </h2>
               <div
                 className={`transition-opacity duration-500 ${
@@ -385,7 +389,7 @@ function MainPage({
               </p>
             </div>
 
-            <div className={isMobile ? "flex flex-col justify-center space-x-4 mb-8" : "flex justify-center space-x-4 mb-8"}>  
+            <div className={isMobile ? "flex flex-col justify-center items-center space-x-4 mb-8" : "flex justify-center space-x-4 mb-8"}>  
               <button
                 onClick={() => {
                   setUserContent(
@@ -396,7 +400,7 @@ function MainPage({
                 className={isMobile ? "flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg ml-4" : "flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"}
               >
                 <i className="fa fa-image"></i>
-                <span>About Icons</span>
+                <span>{t('aboutIcons')}</span>
               </button>
 
               <button
@@ -407,7 +411,7 @@ function MainPage({
                 className="flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"
               >
                 <i className="fa fa-pray"></i>
-                <span>Healing Prayer</span>
+                <span>{t('healingPrayer')}</span>
               </button>
 
               <button
@@ -420,15 +424,15 @@ function MainPage({
                 className="flex items-center space-x-2 text-[#8b4513] hover:text-[#6b3410] transition-colors font-crimson-text text-lg"
               >
                 <i className="fa fa-book-reader"></i>
-                <span>About Fasting</span>
+                <span>{t('aboutFasting')}</span>
               </button>
-              <TextToSpeech selectedLanguage={selectedLanguage} text={promptContent} isAudioLoading={isAudioLoading} isLoading={isLoading} />
             </div>
+            <TextToSpeech selectedLanguage={selectedLanguage} text={promptContent} isAudioLoading={isAudioLoading} isLoading={isLoading} />
 
             <div className="flex flex-col space-y-4 w-full max-w-2xl mx-auto">
               <div className="relative">
                 <textarea
-                  placeholder="Pray with me or ask about Orthodox Christianity..."
+                  placeholder={t('placeholder')}
                   onChange={(e) => setTextAreaContent(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
@@ -472,7 +476,7 @@ function MainPage({
 
             <div className="mt-6 pt-4 border-t border-[#8b4513] border-opacity-20">
               <p className="text-sm font-crimson-text text-[#5c4030] mb-3">
-                Share this prayer
+                {t('share')}
               </p>
               <div className="flex justify-center items-center space-x-6">
                 <button
@@ -524,13 +528,13 @@ function MainPage({
                 className="bg-[#8b4513] text-white px-8 py-3 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2 mx-auto"
               >
                 <i className="fa fa-heart"></i>
-                Support Our Mission
+                {t('support')}
               </button>
               <a
                 href="/DonatePage"
                 className="text-[#8b4513] hover:text-[#2c1810] transition-colors font-crimson-text text-lg underline decoration-1 underline-offset-4"
               >
-                Find out More
+                {t('more')}
               </a>
             </div>
 

@@ -47,7 +47,7 @@ const TextToSpeech = ({ text, isAudioLoading, isLoading, selectedLanguage }) => 
     };
 
     return (
-        <div className='flex gap-2'>
+        <div className='flex gap-2 justify-center w-full mb-6'>
             <button
                 onClick={() => handleSpeak()}
                 disabled={isLoading || promptLang !== "en"}
