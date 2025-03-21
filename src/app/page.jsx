@@ -76,7 +76,7 @@ function MainPage({
       el: "Greek",
       bg: "Bulgarian"
     };
-    return (userContent  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Please respond in " + prompts[language] + "but respond using latin letters");
+    return (userContent  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not include any introductions, explanations, or preambles—start directly with the response. Please respond in " + prompts[language] + ", but use Latin script (not Cyrillic).");
   };
   
   useEffect(() => {
