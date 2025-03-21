@@ -22,7 +22,7 @@ function MainPage({
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 768); // Adjust breakpoint as needed
+      setIsMobile(window.innerWidth <= 768);
     };
 
     checkScreenSize(); // Check on mount

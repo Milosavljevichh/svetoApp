@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { detectLanguageFromIP } from '@/utilities/getLanguageFromIP';
 
+
 function LanguageContextProvider({ children, selectedLanguage, changeLanguage }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
@@ -16,8 +17,13 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
   
     useEffect(() => {
       const getLanguage = async () => {
-        const lang = await detectLanguageFromIP();
+        let lang;
+        lang = localStorage.getItem("userLanguage");
+        if (!lang) {
+          lang = await detectLanguageFromIP();
+        }
         changeLanguage(lang);
+        localStorage.setItem("userLanguage", lang);
       };
   
       getLanguage();
