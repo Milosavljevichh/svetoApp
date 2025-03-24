@@ -8,11 +8,14 @@ const Header = ({selectedLanguage, changeLanguage}) => {
   
   const { t, i18n } = useTranslation();
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      const width = window.innerWidth;
+      setIsMobile(width <= 768);
+      setIsTablet(width > 768 && width <= 1024); // Tablet range
     };
 
     checkScreenSize(); // Check on mount
@@ -28,7 +31,7 @@ const Header = ({selectedLanguage, changeLanguage}) => {
   return (
     <header className="bg-[#2c1810] text-white p-4 z-20 relative">
       {
-        !isMobile ? (
+        !isMobile && !isTablet ? (
           <>
             <nav className="flex items-center px-5">
               <div className="text-2xl font-crimson-text">
@@ -50,11 +53,11 @@ const Header = ({selectedLanguage, changeLanguage}) => {
           onClick={() => setIsOpenDrawer(true)}
           className="hover:text-[#2c1810] transition-colors flex justify-center items-center"
           >
-            <i class="fa-solid fa-bars text-xl"></i>
+            <i className="fa-solid fa-bars text-xl"></i>
           </button>
           {
             isOpenDrawer && (
-              <nav className='fixed top-0 left-0 w-screen h-screen bg-[#2c1810] text-white p-4 pt-[35%] z-20 flex flex-col gap-[24px] items-start justify-start'>
+              <nav className={`fixed top-0 left-0 w-screen h-screen bg-[#2c1810] text-white p-4 pt-[35%] z-20 flex flex-col gap-[24px] ${isMobile ? "items-start" : "items-center"} justify-start`}>
                 <button
                   onClick={() => setIsOpenDrawer(false)}
                   className="absolute top-4 left-4 hover:text-[#2c1810] transition-colors"
