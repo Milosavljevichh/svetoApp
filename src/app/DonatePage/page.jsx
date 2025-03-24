@@ -93,7 +93,7 @@ function DonationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f5f0]">
+    <div className="min-h-screen bg-[#f8f5f0]" id='donate'>
     <div className="fixed inset-0 z-0 w-full h-full">
       <img
         src="https://ucarecdn.com/2378599d-07bd-4033-851d-f94d7cb32508/-/format/auto/"
