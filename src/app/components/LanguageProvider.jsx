@@ -22,14 +22,13 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
       const getLanguage = async () => {
         if (!lang) {
           lang = await detectLanguageFromIP();
+          if (lang === "sr") {
+            lang = "srCy";
+            localStorage.setItem("userLanguage", "srCy");
+          }
         }
-        if (lang === "sr" || lang === "srCy") {
-          changeLanguage("srCy");
-          localStorage.setItem("userLanguage", "srCy");
-        } else {
-          changeLanguage(lang);
-          localStorage.setItem("userLanguage", lang);
-        }
+        changeLanguage(lang);
+        localStorage.setItem("userLanguage", lang);
       };
   
       getLanguage();
