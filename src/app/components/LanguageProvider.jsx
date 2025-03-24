@@ -17,13 +17,13 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
     };
   
     useEffect(() => {
+      let lang;
+      lang = localStorage.getItem("userLanguage");
       const getLanguage = async () => {
-        let lang;
-        lang = localStorage.getItem("userLanguage");
         if (!lang) {
           lang = await detectLanguageFromIP();
         }
-        if (lang === "sr") {
+        if (lang === "sr" || lang === "srCy") {
           changeLanguage("srCy");
           localStorage.setItem("userLanguage", "srCy");
         } else {
@@ -36,7 +36,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
     }, []);
   
     return (
-      <div> 
+      <div className="z-100"> 
         <div className="absolute top-4 right-4 z-20">
           <div className="relative">
             <button
