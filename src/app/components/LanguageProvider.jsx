@@ -23,8 +23,13 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
         if (!lang) {
           lang = await detectLanguageFromIP();
         }
-        changeLanguage(lang);
-        localStorage.setItem("userLanguage", lang);
+        if (lang === "sr") {
+          changeLanguage("srCy");
+          localStorage.setItem("userLanguage", "srCy");
+        } else {
+          changeLanguage(lang);
+          localStorage.setItem("userLanguage", lang);
+        }
       };
   
       getLanguage();
@@ -58,6 +63,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
                     <button
                       key={code}
                       onClick={() => {
+                        localStorage.setItem("userLanguage", code);
                         changeLanguage(code);
                         setIsDropdownOpen(false);
                       }}
