@@ -10,6 +10,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
     const languages = {
       en: { name: "English", flag: "🇬🇧" },
       sr: { name: "Serbian", flag: "🇷🇸" },
+      srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
       ru: { name: "Russian", flag: "🇷🇺" },
       el: { name: "Greek", flag: "🇬🇷" },
       bg: { name: "Bulgarian", flag: "🇧🇬" },

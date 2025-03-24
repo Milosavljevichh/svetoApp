@@ -70,13 +70,14 @@ function MainPage({
   
   const generatePrompt = (language) => {
     const prompts = {
-      en: `English`,
-      sr: `Serbian`,
-      ru: `Russian`,
-      el: "Greek",
-      bg: "Bulgarian"
+      en: {lg: `English`, script: "Latin"},
+      sr: {lg: `Serbian`, script: "Latin (not Cyrillic)"},
+      srCy: {lg: "Serbian", script: "Cyrillic"},
+      ru: {lg: `Russian`, script: "Latin (not Cyrillic)"},
+      el: {lg: "Greek", script: "Latin (not Cyrillic)"},
+      bg: {lg: "Bulgarian", script: "Latin (not Cyrillic)"}
     };
-    return (userContent  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not include any introductions, explanations, or preambles—start directly with the response. Please respond in " + prompts[language] + ", but use Latin script (not Cyrillic).");
+    return (userContent  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not include any introductions, explanations, or preambles—start directly with the response. Please respond in " + prompts[language].lg + `, but use ${prompts[language].script} script.`);
   };
   
   useEffect(() => {

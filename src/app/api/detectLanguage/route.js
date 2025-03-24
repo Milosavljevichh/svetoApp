@@ -12,12 +12,10 @@ export async function GET(req) {
     // 1. Check if it's running on localhost (development environment)
     if (process.env.NODE_ENV === 'development') {
       // For local development, you can either mock the IP or simulate one
-      clientIp = '8.8.8.8'; // Example: Use a public IP like Google's DNS for testing purposes
-      console.log("Running locally. Mock IP: ", clientIp);
+      clientIp = '8.8.8.8'; //Use a public IP like Google's DNS for testing purposes
     } else {
       // 2. Extract the client IP address from headers (for production environment)
       clientIp = req.headers.get('x-forwarded-for') || req.connection.remoteAddress;
-      console.log("Client IP from headers: ", clientIp);
     }
 
     if (!clientIp) {

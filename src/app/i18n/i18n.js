@@ -7,6 +7,7 @@ import sr from '../locales/sr.json';
 import ru from '../locales/ru.json';
 import el from '../locales/el.json';
 import bg from '../locales/bg.json';
+import srCy from '../locales/srCy.json';
 
 i18n
   .use(initReactI18next)
@@ -16,7 +17,8 @@ i18n
       sr: { translation: sr },
       ru: { translation: ru },
       el: { translation: el },
-      bg: { translation: bg }
+      bg: { translation: bg },
+      srCy: {translation: srCy}
     },
     lng: "en", // Default language
     fallbackLng: "en", // If selected language is missing, fallback to English
