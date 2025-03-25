@@ -340,11 +340,11 @@ function MainPage({
                 {t('homePage.todaysPrayer')}
               </h2>
               <div
-                className={`transition-opacity duration-500 ${
+                className={`bg-[#8b4513] w-fit text-white p-2 rounded-lg transform transition hover:scale-105 flex items-center justify-center transition-opacity duration-500 ${
                   isLoading ? "opacity-50" : "opacity-100"
-                }`}
+                } mx-auto`}
               >
-                <i className="fa fa-pray text-2xl text-[#8b4513] mb-4"></i>
+                <i className="fa fa-pray text-2xl text-white"></i>
               </div>
             </div>
 
