@@ -50,12 +50,18 @@ function MainPage({
     }
   }, [isLanguageLoaded]);
 
-  const refreshContent = async () => {
+  useEffect(()=>{
+    if (userContent) {
+      refreshContent(userContent)
+    }
+  }, [userContent])
+
+  const refreshContent = async (prompt) => {
     if (isLoading) return;
     const randomIcon = Object.keys(icons)[Math.floor(Math.random() * 3)];
     setIcon(randomIcon);
 
-    const newPrompt = generatePrompt(userContent, selectedLanguage);
+    const newPrompt = generatePrompt(prompt, selectedLanguage);
     await fetchChatGPT(newPrompt, `You are an Orthodox Christian assistant. Provide detailed answers or prayers based on user-selected topics. Each response should align with Orthodox teachings and:
                           - For icon questions: Explain their spiritual significance, proper veneration, and historical context
                           - For healing prayers: Provide traditional Orthodox prayers for healing, including references to saints known for healing
@@ -78,12 +84,11 @@ function MainPage({
     setIsLanguageLoaded(true)
   }
 
-  useEffect(()=>{
-    if (userContent) {
-      refreshContent()
-    }
-  }, [userContent])
-  console.log(promptContent)
+  function generateNewPrayer() {
+    const prayerPrompt = "Give me a prayer from the prayer book whos official publisher is the church in the format of [Name of the prayer]: [prayer]. It should differ from" + previousContent
+    refreshContent(prayerPrompt)
+  }
+  
   return (
     <>
       <Header selectedLanguage={selectedLanguage} changeLanguage={changeLanguage} />
@@ -123,6 +128,7 @@ function MainPage({
                 className={`bg-[#8b4513] w-fit text-white p-2 rounded-lg transform transition hover:scale-105 flex items-center justify-center transition-opacity duration-500 ${
                   isLoading ? "opacity-50" : "opacity-100"
                 } mx-auto`}
+                onClick={() => { isLoading ? null : generateNewPrayer()}}
               >
                 <i className="fa fa-pray text-2xl text-white"></i>
               </div>
@@ -286,14 +292,6 @@ function MainPage({
       )}
       {isMobile && <DonationPage />}
     </>
-  );
-}
-
-function StoryComponent() {
-  return (
-    <LanguageContextProvider>
-      <MainPage initialContent="Blessed are the pure in heart, for they shall see God. - Matthew 5:8" />
-    </LanguageContextProvider>
   );
 }
 
