@@ -11,25 +11,15 @@ import LanguageContextProvider from './components/LanguageProvider';
 import TextToSpeech from './components/TTS';
 import { useTranslation } from 'react-i18next';
 import './i18n/i18n'; // Import the i18n setup
+import useCheckScreenSize from './hooks/useCheckScreenSize';
 
 function MainPage({
   initialContent = "Welcome to your daily spiritual guide. Let me begin with a prayer for you."
 }) {
 
-  const [isMobile, setIsMobile] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const { t, i18n } = useTranslation();
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkScreenSize(); // Check on mount
-    window.addEventListener("resize", checkScreenSize); // Listen for resize
-
-    return () => window.removeEventListener("resize", checkScreenSize); // Cleanup
-  }, []);
+  const isMobile = useCheckScreenSize()
 
   const icons = {
     cross: "fa fa-cross",
