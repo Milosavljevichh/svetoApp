@@ -15,8 +15,9 @@ const TextToSpeech = ({ text, isAudioLoading, isLoading, selectedLanguage }) => 
         if (text && !isSpeaking) {
             // Check if the SpeechSynthesis API is available
             if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
 
+                const utterance = new SpeechSynthesisUtterance(text);
+                console.log(utterance)
 
                 // Set some options
                 utterance.pitch = 1; // Range is 0-2
@@ -59,7 +60,6 @@ const TextToSpeech = ({ text, isAudioLoading, isLoading, selectedLanguage }) => 
             </button>
             <button
                 onClick={handleStop}
-                disabled={!isSpeaking}
                 className="bg-[#8b4513] text-white p-2 rounded-lg transform transition hover:scale-105 flex items-center justify-center"
             >
                 <i className="fa-solid fa-volume-xmark"></i>
