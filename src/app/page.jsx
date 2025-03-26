@@ -12,6 +12,7 @@ import TextToSpeech from './components/TTS';
 import { useTranslation } from 'react-i18next';
 import './i18n/i18n'; // Import the i18n setup
 import useCheckScreenSize from './hooks/useCheckScreenSize';
+import useShare from './hooks/useShare';
 
 function MainPage({
   initialContent = "Welcome to your daily spiritual guide. Let me begin with a prayer for you."
@@ -36,6 +37,9 @@ function MainPage({
   const [streamingMessage, setStreamingMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [isLanguageLoaded, setIsLanguageLoaded] = useState(false)
+  const [previousContent, setPreviousContent] = useState([initialContent]);
+  const [dailyPrayer, setDailyPrayer] = useState("");
+  const [hasGeneratedDailyPrayer, setHasGeneratedDailyPrayer] = useState(false);
 
   const handleStreamResponse = useHandleStreamResponse({
     onChunk: (message) => {
@@ -52,11 +56,6 @@ function MainPage({
       setStreamingMessage("");
     },
   });
-
-  const [previousContent, setPreviousContent] = useState([initialContent]);
-  const [dailyPrayer, setDailyPrayer] = useState("");
-  const [hasGeneratedDailyPrayer, setHasGeneratedDailyPrayer] = useState(false);
-
   
   const generatePrompt = (language) => {
     const prompts = {
@@ -169,56 +168,9 @@ function MainPage({
     setShowDonationPopup(true);
   };
 
-  const [showCopySuccess, setShowCopySuccess] = useState(false);
-
-  const handleShare = async (platform) => {
-    const shareText = error || streamingMessage || promptContent;
-    const shareUrl = window.location.href;
-
-    switch (platform) {
-      case "facebook":
-        window.open(
-          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-            shareUrl
-          )}&quote=${encodeURIComponent(shareText)}`,
-          "_blank"
-        );
-        break;
-      case "twitter":
-        window.open(
-          `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-            shareText
-          )}&url=${encodeURIComponent(shareUrl)}`,
-          "_blank"
-        );
-        break;
-      case "whatsapp":
-        window.open(
-          `https://wa.me/?text=${encodeURIComponent(
-            `${shareText} ${shareUrl}`
-          )}`,
-          "_blank"
-        );
-        break;
-      case "email":
-        window.open(
-          `mailto:?subject=Orthodox Prayer&body=${encodeURIComponent(
-            `${shareText}\n\n${shareUrl}`
-          )}`,
-          "_blank"
-        );
-        break;
-      case "copy":
-        try {
-          await navigator.clipboard.writeText(`${shareText}\n\n${shareUrl}`);
-          setShowCopySuccess(true);
-          setTimeout(() => setShowCopySuccess(false), 2000);
-        } catch (err) {
-          console.error("Failed to copy:", err);
-        }
-        break;
-    }
-  };
+  const shareText = error || streamingMessage || promptContent;
+  const shareUrl = window.location.href;
+  const {handleShare, showCopySuccess} = useShare(shareText, shareUrl) 
 
   const [showDonationPopup, setShowDonationPopup] = useState(false);
 
