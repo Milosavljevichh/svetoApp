@@ -3,7 +3,6 @@ import './globals.css';
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
-import { useHandleStreamResponse } from "../utilities/runtime-helpers";
 import DonationPage from "./DonatePage/page";
 import '@fortawesome/fontawesome-free/css/all.css';
 import PaymentForm from './components/PaymentForm';
@@ -15,9 +14,10 @@ import useCheckScreenSize from './hooks/useCheckScreenSize';
 import useTextToSpeech from './hooks/useTextToSpeech';
 import SuggestedQuestions from './components/SuggestedQuestions';
 import ShareButtons from './components/ShareButtons';
+import useChatGPT from './hooks/useChatGPT';
+import generatePrompt from '@/utilities/generatePrompt';
 
 function MainPage({
-  initialContent = "Welcome to your daily spiritual guide. Let me begin with a prayer for you."
 }) {
 
   const [selectedLanguage, setSelectedLanguage] = useState("en");
@@ -29,142 +29,40 @@ function MainPage({
     book: "fa fa-book-bible",
     prayer: "fa fa-praying-hands",
   };
+    const initialContent = "Welcome to your daily spiritual guide. Let me begin with a prayer for you."
 
   const [userContent, setUserContent] = useState("");
   const [textAreaContent, setTextAreaContent] = useState("");
-  const [promptContent, setPromptContent] = useState(initialContent);
-  const [isLoading, setIsLoading] = useState(false);
   const [icon, setIcon] = useState("cross");
-  const [error, setError] = useState("");
-  const [streamingMessage, setStreamingMessage] = useState("");
-  const [messages, setMessages] = useState([]);
   const [isLanguageLoaded, setIsLanguageLoaded] = useState(false)
   const [previousContent, setPreviousContent] = useState([initialContent]);
-  const [dailyPrayer, setDailyPrayer] = useState("");
-  const [hasGeneratedDailyPrayer, setHasGeneratedDailyPrayer] = useState(false);
   const { generateTTS, isAudioLoading } = useTextToSpeech();
   const [showDonationPopup, setShowDonationPopup] = useState(false);
+  const { isLoading, error, messages, fetchChatGPT, generateDailyPrayer, streamingMessage, promptContent } = useChatGPT();
   
   useEffect(() => {
     i18n.changeLanguage(selectedLanguage);
   }, [selectedLanguage]);
 
-  const handleStreamResponse = useHandleStreamResponse({
-    onChunk: (message) => {
-      const processedMessage = message.replace(/\*\*/g, " ** ");
-      setStreamingMessage(processedMessage);
-    },
-    onFinish: (message) => {
-      const processedMessage = message.replace(/\*\*/g, " ** ");
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: processedMessage },
-      ]);
-      setPromptContent(processedMessage);
-      setStreamingMessage("");
-    },
-  });
-  
-  const generatePrompt = (language) => {
-    const prompts = {
-      en: {lg: `English`, script: "Latin"},
-      sr: {lg: `Serbian`, script: "Latin (not Cyrillic)"},
-      srCy: {lg: "Serbian", script: "Cyrillic"},
-      ru: {lg: `Russian`, script: "Latin (not Cyrillic)"},
-      el: {lg: "Greek", script: "Latin (not Cyrillic)"},
-      bg: {lg: "Bulgarian", script: "Latin (not Cyrillic)"}
-    };
-    return (userContent  +". Keep the response concise and meaningful, focusing on Orthodox Christian teachings. Do not include any introductions, explanations, or preambles—start directly with the response. Please respond in " + prompts[language].lg + `, but use ${prompts[language].script} script.`);
-  };
-  
   useEffect(() => {
-    if (!hasGeneratedDailyPrayer && isLanguageLoaded) {
-      generateDailyPrayer();
+    if (isLanguageLoaded) {
+      generateDailyPrayer(generatePrompt("Generate today's Orthodox prayer", selectedLanguage));
     }
   }, [isLanguageLoaded]);
 
-  const generateDailyPrayer = async () => {
-    if (isLoading) return;
-    setIsLoading(true);
-    setUserContent(`Generate today's Orthodox prayer`);
-    try {
-      const response = await fetch("/integrations/chat-gpt/conversationgpt4", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: [
-            {
-              role: "system",
-              content: `You are a spiritual assistant dedicated to providing Orthodox Christian prayers and teachings. Generate a unique, meaningful, and concise daily prayer that aligns with Orthodox Christian values and traditions. The prayer should be different each time, focusing on themes of gratitude, faith, repentance, and divine guidance.`,
-            },
-            {
-              role: "user",
-              content: generatePrompt(selectedLanguage),
-            },
-          ],
-          stream: true,
-        }),
-      });
-  
-      if (!response.ok) throw new Error("Failed to generate daily prayer");
-      await handleStreamResponse(response);
-      setHasGeneratedDailyPrayer(true);
-    } catch (err) {
-      setError("Failed to generate daily prayer. Please try again.");
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  }; 
-
   const refreshContent = async () => {
     if (isLoading) return;
-    setIsLoading(true);
-    setError("");
     const randomIcon = Object.keys(icons)[Math.floor(Math.random() * 3)];
     setIcon(randomIcon);
 
-    try {
-      const response = await fetch("/integrations/chat-gpt/conversationgpt4", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: [
-            {
-              role: "system",
-              content: `You are an Orthodox Christian assistant. Provide detailed answers or prayers based on user-selected topics. Each response should align with Orthodox teachings and:
+    const newPrompt = generatePrompt(userContent, selectedLanguage);
+    await fetchChatGPT(newPrompt, `You are an Orthodox Christian assistant. Provide detailed answers or prayers based on user-selected topics. Each response should align with Orthodox teachings and:
                           - For icon questions: Explain their spiritual significance, proper veneration, and historical context
                           - For healing prayers: Provide traditional Orthodox prayers for healing, including references to saints known for healing
                           - For fasting questions: Explain Orthodox fasting traditions, spiritual benefits, and practical guidance
-                          Always maintain a reverent tone and include relevant scripture or patristic quotes.`,
-            },
-            {
-              role: "user",
-              content: generatePrompt(selectedLanguage),
-            },
-          ],
-          stream: true,
-        }),
-      });
-
-      if (!response.ok) throw new Error("Failed to generate response");
-      await handleStreamResponse(response);
-
-      const newContent = error || streamingMessage || promptContent;
-      setPreviousContent((prev) => {
-        const updated = [...prev, newContent];
-        return updated.slice(-5);
-      });
-    } catch (err) {
-      setError("Failed to generate response. Please try again.");
-      console.log(err)
-    } finally {
-      setIsLoading(false);
-    }
+                          Always maintain a reverent tone and include relevant scripture or patristic quotes.`);
+    
+    setPreviousContent((prev) => [...prev.slice(-4), newPrompt]);
   };
 
   const handleDonationClick = () => {
@@ -185,7 +83,7 @@ function MainPage({
       refreshContent()
     }
   }, [userContent])
-  
+  console.log(promptContent)
   return (
     <>
       <Header selectedLanguage={selectedLanguage} changeLanguage={changeLanguage} />
