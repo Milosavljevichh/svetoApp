@@ -167,9 +167,14 @@ function MainPage({
   const handleDonationClick = () => {
     setShowDonationPopup(true);
   };
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // This runs only on the client side
+  }, []);
 
   const shareText = error || streamingMessage || promptContent;
-  const shareUrl = window.location.href;
+  const shareUrl = isClient ? window.location.href : "";
   const {handleShare, showCopySuccess} = useShare(shareText, shareUrl) 
 
   const [showDonationPopup, setShowDonationPopup] = useState(false);
