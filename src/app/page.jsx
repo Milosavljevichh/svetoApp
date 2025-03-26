@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import './i18n/i18n'; // Import the i18n setup
 import useCheckScreenSize from './hooks/useCheckScreenSize';
 import useShare from './hooks/useShare';
+import useTextToSpeech from './hooks/useTextToSpeech';
 
 function MainPage({
   initialContent = "Welcome to your daily spiritual guide. Let me begin with a prayer for you."
@@ -40,6 +41,19 @@ function MainPage({
   const [previousContent, setPreviousContent] = useState([initialContent]);
   const [dailyPrayer, setDailyPrayer] = useState("");
   const [hasGeneratedDailyPrayer, setHasGeneratedDailyPrayer] = useState(false);
+  const { generateTTS, isAudioLoading } = useTextToSpeech();
+  const [isClient, setIsClient] = useState(false);
+  const shareText = error || streamingMessage || promptContent;
+  const shareUrl = isClient ? window.location.href : "";
+  const {handleShare, showCopySuccess} = useShare(shareText, shareUrl) 
+
+  useEffect(() => {
+    setIsClient(true); // This runs only on the client side
+  }, []);
+  
+  useEffect(() => {
+    i18n.changeLanguage(selectedLanguage);
+  }, [selectedLanguage]);
 
   const handleStreamResponse = useHandleStreamResponse({
     onChunk: (message) => {
@@ -74,11 +88,6 @@ function MainPage({
       generateDailyPrayer();
     }
   }, [isLanguageLoaded]);
-
-  
-  useEffect(() => {
-    i18n.changeLanguage(selectedLanguage);
-  }, [selectedLanguage]);
 
   const generateDailyPrayer = async () => {
     if (isLoading) return;
@@ -167,15 +176,6 @@ function MainPage({
   const handleDonationClick = () => {
     setShowDonationPopup(true);
   };
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true); // This runs only on the client side
-  }, []);
-
-  const shareText = error || streamingMessage || promptContent;
-  const shareUrl = isClient ? window.location.href : "";
-  const {handleShare, showCopySuccess} = useShare(shareText, shareUrl) 
 
   const [showDonationPopup, setShowDonationPopup] = useState(false);
 
@@ -221,35 +221,6 @@ function MainPage({
       refreshContent()
     }
   }, [userContent])
-
-  const [audioUrl, setAudioUrl] = useState(null);
-  const [isAudioLoading, setIsAudioLoading] = useState(false);
-
-  const generateTTS = async (text) => {
-    setIsAudioLoading(true);
-  
-    try {
-      const response = await fetch("/api/tts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
-  
-      if (!response.ok) {
-        throw new Error("TTS request failed");
-      }
-  
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
-      audio.play();
-  
-    } catch (error) {
-      console.error("Error generating TTS:", error);
-    }
-  
-    setIsAudioLoading(false);
-  };
   
   return (
     <>
