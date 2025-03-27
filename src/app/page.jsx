@@ -88,6 +88,12 @@ function MainPage({
     const prayerPrompt = "Give me a prayer from the prayer book whos official publisher is the church in the format of [Name of the prayer]: [prayer]. It should differ from" + previousContent
     refreshContent(prayerPrompt)
   }
+
+  function explainConcept(word) {
+    const concept = `You mentioned ${word} when you said ${promptContent}. Can you explain to me what ${word} is and inform me more about it?`
+    console.log(concept)
+    refreshContent(concept)
+  }
   
   return (
     <>
@@ -148,20 +154,7 @@ function MainPage({
                       key={index}
                       className="inline-block px-1 hover:bg-[#8b4513]/10 rounded transition-colors cursor-pointer"
                       onClick={async () => {
-                        try {
-                          await navigator.clipboard.writeText(word);
-                          const tooltip = document.createElement("div");
-                          tooltip.textContent = "Copied!";
-                          tooltip.className =
-                            "absolute bg-[#2c1810] text-white px-2 py-1 rounded text-sm";
-                          const rect = event.target.getBoundingClientRect();
-                          tooltip.style.left = `${rect.left}px`;
-                          tooltip.style.top = `${rect.top - 25}px`;
-                          document.body.appendChild(tooltip);
-                          setTimeout(() => tooltip.remove(), 1000);
-                        } catch (err) {
-                          console.error("Failed to copy:", err);
-                        }
+                        explainConcept(word)
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.transform = "scale(1.1)";
