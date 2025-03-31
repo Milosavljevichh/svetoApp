@@ -9,13 +9,23 @@
         "tts": "Text to Speech",
         "placeholder": "Pray with me or ask a question about Orthodox Christianity...",
         "questions": {
-            "q1": "What does fasting mean in Orthodox tradition?",
+        "general": {
+            "title": "General",
+            "q1": "What does fasting mean in the Orthodox tradition?",
             "q2": "How can I start a prayer life?",
             "q3": "What is the role of icons in Orthodoxy?",
             "q4": "Who are the most important saints in the Orthodox Church?",
             "q5": "Can you explain the significance of the Holy Trinity?",
             "q6": "Can you give me a prayer for students?"
         },
+        "holiday": {
+            "title": "Holidays",
+            "q1": "Why do we celebrate the family patron saint day? (Slava)",
+            "q2": "What does the Holy Liturgy signify?",
+            "q3": "Why do we celebrate Easter?",
+            "q4": "Why do we celebrate Christmas?"
+        }
+    },
         "share": "Share this prayer",
         "support": "Support our mission",
         "more": "Learn more"

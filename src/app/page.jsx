@@ -17,6 +17,7 @@ import ShareButtons from './components/ShareButtons';
 import useChatGPT from './hooks/useChatGPT';
 import generatePrompt from '@/utilities/generatePrompt';
 import getPrompts from '@/utilities/getLanguageForPrompts';
+import RecommendationsDropdown from './components/RecommendationsDropdown';
 
 function MainPage({
 }) {
@@ -54,6 +55,7 @@ function MainPage({
   useEffect(()=>{
     if (userContent) {
       refreshContent(userContent)
+      setUserContent("")
     }
   }, [userContent])
 
@@ -243,8 +245,9 @@ function MainPage({
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <SuggestedQuestions setUserContent={setUserContent} setTextAreaContent={setTextAreaContent} />
+              <div>
+                {/* <SuggestedQuestions setUserContent={setUserContent} setTextAreaContent={setTextAreaContent} /> */}
+                <RecommendationsDropdown questionGroups={[<SuggestedQuestions />]} setUserContent={setUserContent} setTextAreaContent={setTextAreaContent} />
               </div>
             </div>
 

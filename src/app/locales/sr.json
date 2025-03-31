@@ -9,12 +9,24 @@
         "tts": "Tekst u govor",
         "placeholder": "Moli se sa mnom ili postavi pitanje o Pravoslavnom Hrišćanstvu...",
         "questions":{
-            "q1": "Šta znači post u pravoslavnoj tradiciji?",
-            "q2": "Kako mogu započeti molitveni život?",
-            "q3": "Koja je uloga ikona u Pravoslavlju?",
-            "q4": "Ko su najvažniji sveci u Pravoslavnoj Crkvi?",
-            "q5": "Možeš li mi objasniti značaj Svete Trojice?",
-            "q6": "Možeš li mi dati molitvu za studente?"
+            "general":
+            {
+                "title": "Uopšteno",
+                "q1": "Šta znači post u pravoslavnoj tradiciji?",
+                "q2": "Kako mogu započeti molitveni život?",
+                "q3": "Koja je uloga ikona u Pravoslavlju?",
+                "q4": "Ko su najvažniji sveci u Pravoslavnoj Crkvi?",
+                "q5": "Možeš li mi objasniti značaj Svete Trojice?",
+                "q6": "Možeš li mi dati molitvu za studente?"
+            },
+            "holiday":
+            {
+                "title": "Praznici",
+                "q1": "Zašto slavimo slave?",
+                "q2": "Šta označava Sveta Liturgija?",
+                "q3": "Zašto slavimo Uskrs?",
+                "q4": "Zašto slavimo Božić"
+            }
         },
         "share":"Podeli ovu molitvu",
         "support":"Podrži našu misiju",
