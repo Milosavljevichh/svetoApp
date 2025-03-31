@@ -137,7 +137,7 @@ function MainPage({
                 {t('homePage.todaysPrayer')}
               </h2>
               <div
-                className={`bg-[#8b4513] w-fit text-white p-2 rounded-lg transform transition hover:scale-105 flex items-center justify-center transition-opacity duration-500 ${
+                className={`bg-[#8b4513] hover:bg-[#4f2609] hover:cursor-pointer w-fit text-white p-2 rounded-lg transform transition hover:scale-105 flex items-center justify-center transition-opacity duration-500 ${
                   isLoading ? "opacity-50" : "opacity-100"
                 } mx-auto`}
                 onClick={() => { isLoading ? null : generateNewPrayer()}}
