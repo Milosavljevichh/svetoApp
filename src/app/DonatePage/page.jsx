@@ -107,7 +107,7 @@ function DonationPage() {
         {!isMobile && <Header selectedLanguage={selectedLanguage} changeLanguage={changeLanguage} />}
       <div className="max-w-5xl mx-auto p-6 z-10 relative">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-crimson-text text-[#8b4513] mb-6">
+          <h1 className="text-4xl md:text-6xl w-[70%] font-crimson-text text-[#8b4513] mx-auto mb-6">
             {t('donationPage.title')}
           </h1>
           <p className="text-xl font-crimson-text text-[#5c4030] mb-8">
