@@ -3,6 +3,7 @@ import LanguageContextProvider from './LanguageProvider';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import '../i18n/i18n'; // Import the i18n setup
+import PageSwitchingArrows from './PageSwitchingArrows';
 
 const Header = ({selectedLanguage, changeLanguage}) => {
   
@@ -46,6 +47,7 @@ const Header = ({selectedLanguage, changeLanguage}) => {
               </div>
             </nav>
             <LanguageContextProvider selectedLanguage={selectedLanguage} changeLanguage={changeLanguage}  />
+            <PageSwitchingArrows />
           </>
         ) : (
           <>
