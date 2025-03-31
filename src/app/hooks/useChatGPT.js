@@ -78,7 +78,8 @@ const [isLoading, setIsLoading] = useState(false);
     streamingMessage,
     fetchChatGPT,
     generateDailyPrayer,
-    promptContent
+    promptContent,
+    hasGeneratedDailyPrayer
   };
 }
 

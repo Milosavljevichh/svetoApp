@@ -38,7 +38,7 @@ function MainPage({
   const [previousContent, setPreviousContent] = useState([initialContent]);
   const { generateTTS, isAudioLoading } = useTextToSpeech();
   const [showDonationPopup, setShowDonationPopup] = useState(false);
-  const { isLoading, error, messages, fetchChatGPT, generateDailyPrayer, streamingMessage, promptContent } = useChatGPT();
+  const { isLoading, error, messages, fetchChatGPT, generateDailyPrayer, streamingMessage, promptContent, hasGeneratedDailyPrayer } = useChatGPT();
   
   useEffect(() => {
     i18n.changeLanguage(selectedLanguage);
@@ -56,12 +56,12 @@ function MainPage({
     }
   }, [userContent])
 
-  const refreshContent = async (prompt) => {
+  const refreshContent = async (prompt, lang) => {
     if (isLoading) return;
     const randomIcon = Object.keys(icons)[Math.floor(Math.random() * 3)];
     setIcon(randomIcon);
 
-    const newPrompt = generatePrompt(prompt, selectedLanguage);
+    const newPrompt = generatePrompt(prompt, lang || selectedLanguage);
     await fetchChatGPT(newPrompt, `You are an Orthodox Christian assistant. Provide detailed answers or prayers based on user-selected topics. Each response should align with Orthodox teachings and:
                           - For icon questions: Explain their spiritual significance, proper veneration, and historical context
                           - For healing prayers: Provide traditional Orthodox prayers for healing, including references to saints known for healing
@@ -82,6 +82,18 @@ function MainPage({
   function changeLanguage(lang){
     setSelectedLanguage(lang)
     setIsLanguageLoaded(true)
+    if (hasGeneratedDailyPrayer) {
+      const prompts = {
+        en: { lg: "English", script: "Latin" },
+        sr: { lg: "Serbian", script: "Latin (not Cyrillic)" },
+        srCy: { lg: "Serbian", script: "Cyrillic" },
+        ru: { lg: "Russian", script: "Latin (not Cyrillic)" },
+        el: { lg: "Greek", script: "Latin (not Cyrillic)" },
+        bg: { lg: "Bulgarian", script: "Latin (not Cyrillic)" },
+      };
+      const textToTranslate = `Please translate this text to ${prompts[lang].lg} using ${prompts[lang].script} script because I don't understand it and it is related to Orthodox Christianity. Only translate it, without adding or removing any words or sentences. The text is: ${streamingMessage || promptContent}`
+      refreshContent(textToTranslate, lang)
+    }
   }
 
   function generateNewPrayer() {
