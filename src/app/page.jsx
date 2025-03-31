@@ -16,6 +16,7 @@ import SuggestedQuestions from './components/SuggestedQuestions';
 import ShareButtons from './components/ShareButtons';
 import useChatGPT from './hooks/useChatGPT';
 import generatePrompt from '@/utilities/generatePrompt';
+import getPrompts from '@/utilities/getLanguageForPrompts';
 
 function MainPage({
 }) {
@@ -83,14 +84,7 @@ function MainPage({
     setSelectedLanguage(lang)
     setIsLanguageLoaded(true)
     if (hasGeneratedDailyPrayer) {
-      const prompts = {
-        en: { lg: "English", script: "Latin" },
-        sr: { lg: "Serbian", script: "Latin (not Cyrillic)" },
-        srCy: { lg: "Serbian", script: "Cyrillic" },
-        ru: { lg: "Russian", script: "Latin (not Cyrillic)" },
-        el: { lg: "Greek", script: "Latin (not Cyrillic)" },
-        bg: { lg: "Bulgarian", script: "Latin (not Cyrillic)" },
-      };
+      const prompts = getPrompts()
       const textToTranslate = `Please translate this text to ${prompts[lang].lg} using ${prompts[lang].script} script because I don't understand it and it is related to Orthodox Christianity. Only translate it, without adding or removing any words or sentences. The text is: ${streamingMessage || promptContent}`
       refreshContent(textToTranslate, lang)
     }
