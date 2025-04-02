@@ -62,7 +62,9 @@
     },
     "header": {
         "home": "Početna",
-        "donate": "Podržite"
+        "donate": "Podržite",
+        "tutorial":"Ako u odgovoru nađeš reč koja ti nije jasna, samo je klikni. Dobiješ obaveštenje sa objašnjenjem značenja te reči, što ti pomaže da lakše razumeš odgovor.",
+        "tutorialTitle":"Uputstvo"
     },
     "paymentForm": {
         "title": "Izaberite metod plačanja",

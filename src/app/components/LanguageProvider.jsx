@@ -35,7 +35,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
   
     return (
       <div className="z-100"> 
-        <div className="absolute top-4 right-4 z-20">
+        <div>
           <div className="relative">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}

@@ -58,9 +58,11 @@
             }
         }
     },
-    "header":{
-        "home":"Home",
-        "donate":"Donate"
+    "header": {
+        "home": "Home",
+        "donate": "Donate",
+        "tutorial": "If you find a word in the response that is unclear, just click on it. You will receive a notification with an explanation of the word's meaning, helping you better understand the response.",
+        "tutorialTitle": "Tutorial"
     },
     "paymentForm":{
         "title":"Choose Payment Method",
