@@ -10,15 +10,20 @@ const GoogleAnalytics = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  // Initialize GA only once on the client side
   useEffect(() => {
-    ReactGA.initialize(GA_TRACKING_ID);
-  }, []);
+    if (typeof window !== "undefined") { // Ensure this runs only on the client
+      ReactGA.initialize(GA_TRACKING_ID);
+    }
+  }, []); // Empty dependency array ensures it runs only once
 
+  // Track page view changes
   useEffect(() => {
     if (pathname) {
-      ReactGA.send({ hitType: "pageview", page: pathname + searchParams.toString() });
+      const page = pathname + (searchParams ? `?${searchParams.toString()}` : "");
+      ReactGA.send({ hitType: "pageview", page });
     }
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams]); // Track when pathname or search params change
 
   return null;
 };
