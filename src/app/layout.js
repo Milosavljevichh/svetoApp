@@ -18,8 +18,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+        <GoogleAnalytics />
       <body className={inter.className}>
-        {/* <GoogleAnalytics /> */}
         {children}
       </body>
     </html>
