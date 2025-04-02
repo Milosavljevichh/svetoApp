@@ -42,6 +42,7 @@ function MainPage({
   const { generateTTS, isAudioLoading } = useTextToSpeech();
   const [showDonationPopup, setShowDonationPopup] = useState(false);
   const [previousUserContent, setPreviousUserContent] = useState("")
+  const [previousPrayers, setPreviousPrayers] = useState([])
   const { isLoading, error, messages, fetchChatGPT, generateDailyPrayer, streamingMessage, promptContent, hasGeneratedDailyPrayer } = useChatGPT();
   
   useEffect(() => {
@@ -90,13 +91,13 @@ function MainPage({
     setIsLanguageLoaded(true)
     if (hasGeneratedDailyPrayer) {
       const prompts = getPrompts()
-      const textToTranslate = `Please translate this text to ${prompts[lang].lg} using ${prompts[lang].script} script because I don't understand it and it is related to Orthodox Christianity. Only translate it, without adding or removing any words or sentences. The text is: ${streamingMessage || promptContent}`
+      const textToTranslate = `Please translate this text to ${prompts[lang].lg} using ${prompts[lang].script} script because I don't understand it and it is related to Orthodox Christianity. Only translate it, without adding or removing any words or sentences. The text is: ${promptContent}`
       refreshContent(textToTranslate, lang)
     }
   }
 
   function generateNewPrayer() {
-    const prayerPrompt = "Give me a prayer from the prayer book whos official publisher is the church in the format of [Name of the prayer]: [prayer]. It should differ from" + previousContent
+    const prayerPrompt = "Give me a prayer from the prayer book whos official publisher is the church in the format of [Name of the prayer]: [prayer]. It should differ from: " + previousPrayers
     refreshContent(prayerPrompt)
   }
 
@@ -250,7 +251,6 @@ function MainPage({
               </div>
 
               <div>
-                {/* <SuggestedQuestions setUserContent={setUserContent} setTextAreaContent={setTextAreaContent} /> */}
                 <RecommendationsDropdown questionGroups={[<SuggestedQuestions />]} setUserContent={setUserContent} setTextAreaContent={setTextAreaContent} />
               </div>
             </div>
