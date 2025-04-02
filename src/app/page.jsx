@@ -18,6 +18,7 @@ import useChatGPT from './hooks/useChatGPT';
 import generatePrompt from '@/utilities/generatePrompt';
 import getPrompts from '@/utilities/getLanguageForPrompts';
 import RecommendationsDropdown from './components/RecommendationsDropdown';
+import NewResponseButton from './components/NewResponseButton';
 
 function MainPage({
 }) {
@@ -40,6 +41,7 @@ function MainPage({
   const [previousContent, setPreviousContent] = useState([initialContent]);
   const { generateTTS, isAudioLoading } = useTextToSpeech();
   const [showDonationPopup, setShowDonationPopup] = useState(false);
+  const [previousUserContent, setPreviousUserContent] = useState("")
   const { isLoading, error, messages, fetchChatGPT, generateDailyPrayer, streamingMessage, promptContent, hasGeneratedDailyPrayer } = useChatGPT();
   
   useEffect(() => {
@@ -55,6 +57,7 @@ function MainPage({
   useEffect(()=>{
     if (userContent) {
       refreshContent(userContent)
+      setPreviousUserContent(userContent)
       setUserContent("")
     }
   }, [userContent])
@@ -99,7 +102,6 @@ function MainPage({
 
   function explainConcept(word) {
     const concept = `You mentioned ${word} when you said ${promptContent}. Can you explain to me what ${word} is and inform me more about it?`
-    console.log(concept)
     refreshContent(concept)
   }
   
@@ -215,8 +217,10 @@ function MainPage({
                 <span>{t('homePage.aboutFasting')}</span>
               </button>
             </div>
-            <TextToSpeech selectedLanguage={selectedLanguage} text={promptContent} isAudioLoading={isAudioLoading} isLoading={isLoading} />
-
+            <div className='w-full flex align-center justify-center gap-3'>
+              <TextToSpeech selectedLanguage={selectedLanguage} text={promptContent} isAudioLoading={isAudioLoading} isLoading={isLoading} />
+              <NewResponseButton previousUserContent={previousUserContent} refreshContent={refreshContent} selectedLang={selectedLanguage} />
+            </div>
             <div className="flex flex-col space-y-4 w-full max-w-2xl mx-auto">
               <div className="relative">
                 <textarea
