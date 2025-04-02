@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import ReactGA from "react-ga4";
 
-const GA_TRACKING_ID = "G-767RS5X2MQ";
+const GA_TRACKING_ID = process.env.GA_TRACKING_ID;
 
 const GoogleAnalytics = () => {
   const pathname = usePathname();
