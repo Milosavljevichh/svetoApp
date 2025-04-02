@@ -1,7 +1,7 @@
 
 import React from "react";
 import { useState, useEffect } from "react";
-import { detectLanguageFromIP } from '@/utilities/getLanguageFromIP';
+import { detectLanguageFromIP } from '../../utilities/getLanguageFromIP';
 
 function LanguageContextProvider({ children, selectedLanguage, changeLanguage }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);

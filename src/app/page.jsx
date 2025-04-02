@@ -15,8 +15,8 @@ import useTextToSpeech from './hooks/useTextToSpeech';
 import SuggestedQuestions from './components/SuggestedQuestions';
 import ShareButtons from './components/ShareButtons';
 import useChatGPT from './hooks/useChatGPT';
-import generatePrompt from '@/utilities/generatePrompt';
-import getPrompts from '@/utilities/getLanguageForPrompts';
+import generatePrompt from '../utilities/generatePrompt';
+import getPrompts from '../utilities/getLanguageForPrompts';
 import RecommendationsDropdown from './components/RecommendationsDropdown';
 import NewResponseButton from './components/NewResponseButton';
 
