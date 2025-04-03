@@ -74,14 +74,14 @@
                 "placeholder": "Unesite svoj broj telefona"
             },
             "card": {
-                "title": "Kreditna/Debitna kartica",
+                "title": "Kupi mi kafu (link)",
                 "p1": "Ime vlasnika kartice",
                 "p2": "Broj kartice",
                 "p3": "MM/GG",
                 "p4": "CVV",
                 "securePayment": "Sigurno plaćanje"
             },
-            "qrCode": "QR kod"
+            "qrCode": "Wise QR kod"
         },
         "customAmount": "Prilagođeni iznos",
         "selectedAmount": "Izabrani iznos:",

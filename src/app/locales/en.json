@@ -72,14 +72,14 @@
                 "placeholder":"Enter your phone number"
             },
             "card":{
-                "title":"Credit/Debit Card",
+                "title":"'Buy me a cofee' link",
                 "p1":"Cardholder Name",
                 "p2":"Card Number",
                 "p3":"MM/YY",
                 "p4":"CVV",
                 "securePayment":"Secure Payment"
             },
-            "qrCode":"QR Code"
+            "qrCode":"Wise QR Code"
         },
         "customAmount": "Custom Amount",
         "selectedAmount": "Selected amount:",

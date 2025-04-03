@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useTranslation } from 'react-i18next';
 import '../i18n/i18n'; // Import the i18n setup
+import Link from "next/link";
 
 const PaymentForm = ({ setShowDonationPopup, selectedLanguage }) => {
 
@@ -18,7 +19,7 @@ const PaymentForm = ({ setShowDonationPopup, selectedLanguage }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const [paymentMethod, setPaymentMethod] = useState("sms");
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [donationAmount, setDonationAmount] = useState("5");
   const [customAmount, setCustomAmount] = useState("");
@@ -75,7 +76,7 @@ const PaymentForm = ({ setShowDonationPopup, selectedLanguage }) => {
         </h2>
 
         <div className="space-y-4">
-          <button
+          {/* <button
             onClick={() => setPaymentMethod("sms")}
             className={`w-full p-4 rounded-lg flex items-center gap-3 transition ${
               paymentMethod === "sms"
@@ -85,9 +86,9 @@ const PaymentForm = ({ setShowDonationPopup, selectedLanguage }) => {
           >
             <i className="fa fa-comment-alt"></i>
             {t('paymentForm.options.sms.title')}
-          </button>
+          </button> */}
 
-          <button
+          {/* <button
             onClick={() => setPaymentMethod("card")}
             className={`w-full p-4 rounded-lg flex items-center gap-3 transition ${
               paymentMethod === "card"
@@ -97,12 +98,25 @@ const PaymentForm = ({ setShowDonationPopup, selectedLanguage }) => {
           >
             <i className="fa fa-credit-card"></i>
             {t('paymentForm.options.card.title')}
-          </button>
+          </button> */}
+          <Link
+          href={"https://buymeacoffee.com/sveto.rs"}
+          target="_blank"
+            onClick={() => setPaymentMethod("link")}
+            className={`w-full p-4 rounded-lg flex items-center gap-3 transition ${
+              !(paymentMethod === "link")
+                ? "bg-[#8b4513] text-white"
+                : "bg-white border-2 border-[#8b4513] text-[#8b4513]"
+            }`}
+          >
+            <i className="fa-solid fa-handshake-angle"></i>
+            {t('paymentForm.options.card.title')}
+          </Link>
 
           <button
             onClick={() => setPaymentMethod("qrCode")}
             className={`w-full p-4 rounded-lg flex items-center gap-3 transition ${
-              paymentMethod === "qrCode"
+              !(paymentMethod === "qrCode")
                 ? "bg-[#8b4513] text-white"
                 : "bg-white border-2 border-[#8b4513] text-[#8b4513]"
             }`}
