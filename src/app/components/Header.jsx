@@ -44,21 +44,22 @@ const Header = ({selectedLanguage, changeLanguage}) => {
             <nav className="flex items-center justify-between px-5">
               <ul className='flex'>
                 <li  className="text-2xl font-crimson-text">
-                <Link href="/" className="hover:text-[#8b4513]">
-                  {t('header.home')}
-                </Link>
+                  <Link href="/" className="hover:text-[#8b4513]">
+                    {t('header.home')}
+                  </Link>
                 </li>
                 <li  className="text-2xl font-crimson-text">
-                <Link href="/DonatePage" className="hover:text-[#8b4513] m-4">
-                  {t('header.donate')}
-                </Link>
+                  <Link href="/DonatePage" className="hover:text-[#8b4513] m-4">
+                    {t('header.donate')}
+                  </Link>
                 </li>
               </ul>
               <div className='flex items-center gap-6'>
                 <button
                   onClick={()=>setIsHelpPopupOpen(true)}
+                  className="hover:text-[#8b4513] transition-colors flex justify-center items-center"
                 >
-                  <i className="fa-solid fa-circle-info"></i>
+                  <i className="fa-solid fa-circle-info text-2xl"></i>
                 </button>
                 <LanguageContextProvider selectedLanguage={selectedLanguage} changeLanguage={changeLanguage}  />
               </div>
@@ -69,14 +70,15 @@ const Header = ({selectedLanguage, changeLanguage}) => {
           <div className='flex gap-4'>
           <button
           onClick={() => setIsOpenDrawer(true)}
-          className="hover:text-[#2c1810] transition-colors flex justify-center items-center"
+          className="hover:text-[#8b4513] transition-colors flex justify-center items-center"
           >
-            <i className="fa-solid fa-bars text-xl"></i>
+            <i className="fa-solid fa-bars text-2xl"></i>
           </button>
           <button
             onClick={()=>setIsHelpPopupOpen(true)}
+            className="hover:text-[#8b4513] transition-colors flex justify-center items-center"
           >
-            <i className="fa-solid fa-circle-info"></i>
+            <i className="fa-solid fa-circle-info text-2xl"></i>
           </button>
           {
             isOpenDrawer && (

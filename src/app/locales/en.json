@@ -61,7 +61,7 @@
     "header": {
         "home": "Home",
         "donate": "Donate",
-        "tutorial": "If you find a word in the response that is unclear, just click on it. You will receive a notification with an explanation of the word's meaning, helping you better understand the response.",
+        "tutorial": "By clicking on a word in Sveto’s message that you want to know more about, you’ll receive an explanation that will help you better understand the concept or deepen your knowledge of Orthodox Christianity.",
         "tutorialTitle": "Tutorial"
     },
     "paymentForm":{
