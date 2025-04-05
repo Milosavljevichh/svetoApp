@@ -19,6 +19,7 @@ import generatePrompt from '../utilities/generatePrompt';
 import getPrompts from '../utilities/getLanguageForPrompts';
 import RecommendationsDropdown from './components/RecommendationsDropdown';
 import NewResponseButton from './components/NewResponseButton';
+import useShare from './hooks/useShare';
 
 function MainPage({
 }) {
@@ -45,9 +46,18 @@ function MainPage({
   const [previousPrayers, setPreviousPrayers] = useState([])
   const { isLoading, error, messages, fetchChatGPT, generateDailyPrayer, streamingMessage, promptContent, hasGeneratedDailyPrayer } = useChatGPT();
   
+  const [isClient, setIsClient] = useState(false);
+  const shareText = error || streamingMessage || promptContent;
+  const shareUrl = isClient ? window.location.href : "";
+  const {handleShare, showCopySuccess} = useShare(shareText, shareUrl)
+
   useEffect(() => {
     i18n.changeLanguage(selectedLanguage);
   }, [selectedLanguage]);
+
+  useEffect(() => {
+      setIsClient(true); // This runs only on the client side
+  }, []);
 
   useEffect(() => {
     if (isLanguageLoaded) {
@@ -152,11 +162,19 @@ function MainPage({
             </div>
 
             <div
-              className={`flex items-center justify space-x-4 transition-opacity duration-500 mb-8 ${
+              className={`flex flex-col-reverse items-center justify space-x-4 transition-opacity duration-500 mb-8 ${
                 isLoading ? "opacity-50" : "opacity-100"
               }`}
             >
-              <i className={`${icons[icon]} text-2xl text-[#8b4513]`}></i>
+              <i 
+                onClick={() => handleShare("copy")}
+                className={`${icons[icon]} relative mt-7 text-2xl text-[#8b4513] hover:cursor-pointer`}>
+                {showCopySuccess && (
+                  <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 text-xs text-[#2c1810] bg-white px-2 py-1 rounded shadow-sm">
+                    Copied!
+                  </span>
+                )}
+                </i>
               <p className="text-xl font-crimson-text text-[#2c1810] select-text cursor-text">
                 {(error || streamingMessage || promptContent)
                   .split(" ")
