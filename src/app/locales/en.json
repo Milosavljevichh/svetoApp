@@ -2,7 +2,7 @@
     "homePage":{
         "title": "Orthodox Christianity",
         "welcome": "Welcome to the platform dedicated to spreading and preserving Orthodox Christianity. Read, listen, and connect with the Word of God in Serbian, Russian, Greek, Bulgarian, and English. Explore biblical prayers, teachings, and sacred texts in both Cyrillic and Latin scripts.",
-        "todaysPrayer": "Today's Prayer",
+        "todaysPrayer": "New Prayer",
         "aboutIcons": "About Icons",
         "healingPrayer": "Healing Prayer",
         "aboutFasting": "About Fasting",
@@ -72,14 +72,14 @@
                 "placeholder":"Enter your phone number"
             },
             "card":{
-                "title":"'Buy me a cofee' link",
+                "title":"Through the BMC app",
                 "p1":"Cardholder Name",
                 "p2":"Card Number",
                 "p3":"MM/YY",
                 "p4":"CVV",
                 "securePayment":"Secure Payment"
             },
-            "qrCode":"Wise QR Code"
+            "qrCode":"Through the Wise app"
         },
         "customAmount": "Custom Amount",
         "selectedAmount": "Selected amount:",

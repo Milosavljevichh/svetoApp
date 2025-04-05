@@ -2,7 +2,7 @@
     "homePage":{
         "title": "Pravoslavno Hrišćanstvo",
         "welcome": "Dobrodošli na platformu posvećenu širenju i očuvanju Pravoslavnog Hrišćanstva. Čitajte, slušajte i povežite se sa Rečju Božijom na srpskom, ruskom, grčkom, bugarskom i engleskom jeziku. Istražite biblijske molitve, učenja i svete tekstove na ćirilici i latinici.",
-        "todaysPrayer": "Današnja molitva",
+        "todaysPrayer": "Nova molitva",
         "aboutIcons": "O ikonama",
         "healingPrayer": "Molitva za isceljenje",
         "aboutFasting": "O postu",
@@ -74,14 +74,14 @@
                 "placeholder": "Unesite svoj broj telefona"
             },
             "card": {
-                "title": "Kupi mi kafu (link)",
+                "title": "Putem BMC aplikacije",
                 "p1": "Ime vlasnika kartice",
                 "p2": "Broj kartice",
                 "p3": "MM/GG",
                 "p4": "CVV",
                 "securePayment": "Sigurno plaćanje"
             },
-            "qrCode": "Wise QR kod"
+            "qrCode": "Putem Wise aplikacije"
         },
         "customAmount": "Prilagođeni iznos",
         "selectedAmount": "Izabrani iznos:",
