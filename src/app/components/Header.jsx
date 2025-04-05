@@ -13,6 +13,7 @@ const Header = ({selectedLanguage, changeLanguage}) => {
   const [isTablet, setIsTablet] = useState(false);
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const [isHelpPopupOpen, setIsHelpPopupOpen] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(false);
   
   useEffect(() => {
     const checkScreenSize = () => {
@@ -28,8 +29,21 @@ const Header = ({selectedLanguage, changeLanguage}) => {
   }, []);
 
   useEffect(()=>{
-    if (isMobile || isTablet) setIsHelpPopupOpen(true)
-  }, [isMobile, isTablet])
+    if (isMobile || isTablet) {
+
+      let firstLoad = localStorage.getItem("firstLoad")
+
+      if (firstLoad === null) {
+        setIsFirstLoad(true)
+        localStorage.setItem('firstLoad', true)
+      } else if (firstLoad === "true") {
+        setIsHelpPopupOpen(true)
+        setIsFirstLoad(false)
+        localStorage.setItem('firstLoad', false)
+      }
+
+    }
+  }, [isMobile, isTablet, isFirstLoad])
 
   useEffect(() => {
     i18n.changeLanguage(selectedLanguage);
