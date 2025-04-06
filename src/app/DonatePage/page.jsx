@@ -22,8 +22,20 @@ function DonationPage() {
   const [selectedLanguage, setSelectedLanguage] = useState("en");
     const { t, i18n } = useTranslation();
 
+const languageLinks = {
+  "sr": "https://buymeacoffee.com/sveto.rs/sveto-rs-sr-l",
+  "srCy": "https://buymeacoffee.com/sveto.rs/zeyutuyemo",
+  "el": "https://buymeacoffee.com/sveto.rs/sveto-rs-gr",
+  "ru": "https://buymeacoffee.com/sveto.rs/sveto-rs-rus",
+  "bg": "https://buymeacoffee.com/sveto.rs/sveto-rs-bulg",
+  "en": "https://buymeacoffee.com/sveto.rs/our-message" // fallback ili default
+};
+const [commentLink,setCommentLink] = useState(languageLinks[selectedLanguage])
+
+
   function changeLanguage(lang){
     setSelectedLanguage(lang)
+    setCommentLink(languageLinks[lang])
   }
 
     useEffect(() => {
@@ -31,7 +43,7 @@ function DonationPage() {
     }, [selectedLanguage]);
   
     useEffect(() => {
-      // Dynamically load the Font Awesome JS script on the client side only
+      setCommentLink(languageLinks[selectedLanguage])
     }, []);
 
   useEffect(() => {
@@ -91,7 +103,7 @@ function DonationPage() {
       setIsSubmitting(false);
     }
   };
-
+  
   return (
     <div className="min-h-screen bg-[#f8f5f0]" id='donate'>
     <div className="fixed inset-0 z-0 w-full h-full">
@@ -136,9 +148,10 @@ function DonationPage() {
             <div className='h-full flex flex-col justify-between text-center'>
             <div className="text-4xl text-[#8b4513] font-crimson-text">{t('donationPage.or')}</div>
               <a 
-              href="https://buymeacoffee.com/sveto.rs/our-message"
+              href={commentLink}
               className="bg-[#8b4513] mt-10 text-white px-8 py-3 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2 mx-auto"
               target='_blank'
+              rel="noopener noreferrer"
               >
                 <i className="fa-solid fa-comments"></i>  
                 {t('homePage.comment')}

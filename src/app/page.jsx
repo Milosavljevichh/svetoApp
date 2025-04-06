@@ -50,6 +50,16 @@ function MainPage({
   const shareText = error || streamingMessage || promptContent;
   const shareUrl = isClient ? window.location.href : "";
   const {handleShare, showCopySuccess} = useShare(shareText, shareUrl)
+  
+  const languageLinks = {
+  "sr": "https://buymeacoffee.com/sveto.rs/sveto-rs-sr-l",
+  "srCy": "https://buymeacoffee.com/sveto.rs/zeyutuyemo",
+  "el": "https://buymeacoffee.com/sveto.rs/sveto-rs-gr",
+  "ru": "https://buymeacoffee.com/sveto.rs/sveto-rs-rus",
+  "bg": "https://buymeacoffee.com/sveto.rs/sveto-rs-bulg",
+  "en": "https://buymeacoffee.com/sveto.rs/our-message" // fallback ili default
+};
+const [commentLink,setCommentLink] = useState(languageLinks[selectedLanguage])
 
   useEffect(() => {
     i18n.changeLanguage(selectedLanguage);
@@ -62,6 +72,7 @@ function MainPage({
   useEffect(() => {
     if (isLanguageLoaded) {
       generateDailyPrayer(generatePrompt("Generate today's Orthodox prayer", selectedLanguage));
+      setCommentLink(selectedLanguage)
     }
   }, [isLanguageLoaded]);
 
@@ -98,6 +109,7 @@ function MainPage({
 
   function changeLanguage(lang){
     setSelectedLanguage(lang)
+    setCommentLink(languageLinks[lang])
     setIsLanguageLoaded(true)
     if (hasGeneratedDailyPrayer) {
       const prompts = getPrompts()
@@ -289,9 +301,10 @@ function MainPage({
                 {t('homePage.support')}
               </button>
               <a 
-              href="https://buymeacoffee.com/sveto.rs/our-message"
+              href={commentLink}
               className="bg-[#8b4513] text-white px-8 py-3 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2 mx-auto"
               target='_blank'
+              rel="noopener noreferrer"
               >
                 <i className="fa-solid fa-comments"></i>  
                 Ostavi komentar
