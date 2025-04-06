@@ -6,7 +6,7 @@ import { detectLanguageFromIP } from '../../utilities/getLanguageFromIP';
 function LanguageContextProvider({ children, selectedLanguage, changeLanguage }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
-    const languages = {
+    let languages = {
       en: { name: "English", flag: "🇬🇧" },
       sr: { name: "Serbian", flag: "🇷🇸" },
       srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
@@ -14,25 +14,95 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
       el: { name: "Greek", flag: "🇬🇷" },
       bg: { name: "Bulgarian", flag: "🇧🇬" },
     };
-  
+
+    function sortLanguages(country){
+      switch(country){
+        case "sr":
+          languages = {
+            srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
+            sr: { name: "Serbian", flag: "🇷🇸" },
+            el: { name: "Greek", flag: "🇬🇷" },
+            ru: { name: "Russian", flag: "🇷🇺" },
+            bg: { name: "Bulgarian", flag: "🇧🇬" },
+            en: { name: "English", flag: "🇬🇧" },
+          };
+          break
+        case "en":
+          languages = {
+            en: { name: "English", flag: "🇬🇧" },
+            el: { name: "Greek", flag: "🇬🇷" },
+            bg: { name: "Bulgarian", flag: "🇧🇬" },
+            srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
+            sr: { name: "Serbian", flag: "🇷🇸" },
+            ru: { name: "Russian", flag: "🇷🇺" },
+          };
+          break
+        case "el":
+          languages = {
+            el: { name: "Greek", flag: "🇬🇷" },
+            srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
+            sr: { name: "Serbian", flag: "🇷🇸" },
+            ru: { name: "Russian", flag: "🇷🇺" },
+            en: { name: "English", flag: "🇬🇧" },
+            bg: { name: "Bulgarian", flag: "🇧🇬" },
+          };
+          break
+        case "ru":
+          languages = {
+            ru: { name: "Russian", flag: "🇷🇺" },
+            srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
+            sr: { name: "Serbian", flag: "🇷🇸" },
+            el: { name: "Greek", flag: "🇬🇷" },
+            bg: { name: "Bulgarian", flag: "🇧🇬" },
+            en: { name: "English", flag: "🇬🇧" },
+          };
+          break
+          case "bg":
+            languages = {
+              bg: { name: "Bulgarian", flag: "🇧🇬" },
+              en: { name: "English", flag: "🇬🇧" },
+              ru: { name: "Russian", flag: "🇷🇺" },
+              srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
+              sr: { name: "Serbian", flag: "🇷🇸" },
+              el: { name: "Greek", flag: "🇬🇷" },
+            };
+            break
+        default:
+          languages = {
+            en: { name: "English", flag: "🇬🇧" },
+            sr: { name: "Serbian", flag: "🇷🇸" },
+            srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
+            ru: { name: "Russian", flag: "🇷🇺" },
+            el: { name: "Greek", flag: "🇬🇷" },
+            bg: { name: "Bulgarian", flag: "🇧🇬" },
+          };
+        break
+      }
+    }
+    
     useEffect(() => {
       let lang;
+      let country;
       lang = localStorage.getItem("userLanguage");
+      country = localStorage.getItem("userCountry");
       const getLanguage = async () => {
-        if (!lang) {
+        if (!lang || !country) {
           lang = await detectLanguageFromIP();
           if (lang === "sr") {
             lang = "srCy";
             localStorage.setItem("userLanguage", "srCy");
           }
+          country = lang;
+          sortLanguages(country);
         }
         changeLanguage(lang);
         localStorage.setItem("userLanguage", lang);
+        localStorage.setItem("userCountry", country);
       };
   
       getLanguage();
     }, []);
-  
+    
     return (
       <div className="z-100"> 
         <div>
