@@ -27,6 +27,16 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
             en: { name: "English", flag: "🇬🇧" },
           };
           break
+          case "srCy":
+            languages = {
+              srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
+              sr: { name: "Serbian", flag: "🇷🇸" },
+              el: { name: "Greek", flag: "🇬🇷" },
+              ru: { name: "Russian", flag: "🇷🇺" },
+              bg: { name: "Bulgarian", flag: "🇧🇬" },
+              en: { name: "English", flag: "🇬🇧" },
+            };
+            break
         case "en":
           languages = {
             en: { name: "English", flag: "🇬🇧" },
