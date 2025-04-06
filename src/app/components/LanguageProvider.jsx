@@ -5,20 +5,20 @@ import { detectLanguageFromIP } from '../../utilities/getLanguageFromIP';
 
 function LanguageContextProvider({ children, selectedLanguage, changeLanguage }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  
-    let languages = {
+    const [languages, setLanguages] = useState({
       en: { name: "English", flag: "🇬🇧" },
       sr: { name: "Serbian", flag: "🇷🇸" },
       srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
       ru: { name: "Russian", flag: "🇷🇺" },
       el: { name: "Greek", flag: "🇬🇷" },
       bg: { name: "Bulgarian", flag: "🇧🇬" },
-    };
+    })
 
     function sortLanguages(country){
+      let sortedLang;
       switch(country){
         case "sr":
-          languages = {
+          sortedLang = {
             srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
             sr: { name: "Serbian", flag: "🇷🇸" },
             el: { name: "Greek", flag: "🇬🇷" },
@@ -28,7 +28,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
           };
           break
           case "srCy":
-            languages = {
+            sortedLang = {
               srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
               sr: { name: "Serbian", flag: "🇷🇸" },
               el: { name: "Greek", flag: "🇬🇷" },
@@ -38,7 +38,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
             };
             break
         case "en":
-          languages = {
+          sortedLang = {
             en: { name: "English", flag: "🇬🇧" },
             el: { name: "Greek", flag: "🇬🇷" },
             bg: { name: "Bulgarian", flag: "🇧🇬" },
@@ -48,7 +48,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
           };
           break
         case "el":
-          languages = {
+          sortedLang = {
             el: { name: "Greek", flag: "🇬🇷" },
             srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
             sr: { name: "Serbian", flag: "🇷🇸" },
@@ -58,7 +58,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
           };
           break
         case "ru":
-          languages = {
+          sortedLang = {
             ru: { name: "Russian", flag: "🇷🇺" },
             srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
             sr: { name: "Serbian", flag: "🇷🇸" },
@@ -68,7 +68,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
           };
           break
           case "bg":
-            languages = {
+            sortedLang = {
               bg: { name: "Bulgarian", flag: "🇧🇬" },
               en: { name: "English", flag: "🇬🇧" },
               ru: { name: "Russian", flag: "🇷🇺" },
@@ -78,7 +78,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
             };
             break
         default:
-          languages = {
+          sortedLang = {
             en: { name: "English", flag: "🇬🇧" },
             sr: { name: "Serbian", flag: "🇷🇸" },
             srCy: { name: "Serbian (Ћирилица)", flag: "🇷🇸" },
@@ -88,6 +88,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
           };
         break
       }
+      setLanguages(sortedLang)
     }
     
     useEffect(() => {
@@ -103,7 +104,6 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
             localStorage.setItem("userLanguage", "srCy");
           }
           country = lang;
-          sortLanguages(country);
         }
         changeLanguage(lang);
         localStorage.setItem("userLanguage", lang);
@@ -111,6 +111,7 @@ function LanguageContextProvider({ children, selectedLanguage, changeLanguage })
       };
   
       getLanguage();
+      sortLanguages(country);
     }, []);
     
     return (
