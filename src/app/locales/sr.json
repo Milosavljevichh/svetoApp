@@ -30,6 +30,7 @@
         },
         "share":"Podeli ovu molitvu",
         "support":"Podrži našu misiju",
+        "comment":"Ostavi komentar",
         "more":"Saznaj više"
     },
     "donationPage": {
@@ -38,7 +39,7 @@
         "support": {
             "title": "Podrška bez registracije",
             "subtitle": "Napravite direktnu donaciju kako biste podržali našu misiju bez potrebe za kreiranjem naloga",
-            "CTA": "Podržite"
+            "CTA": "Podržite nas"
         },
         "or": "ILI",
         "community": {

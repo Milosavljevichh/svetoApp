@@ -105,7 +105,7 @@ function DonationPage() {
         {isDropdownOpen && <PaymentForm setShowDonationPopup={setIsDropdownOpen} selectedLanguage={selectedLanguage} />}
         {isCommunityPopupOpen && <CommunityPrompt setShowPopup={setIsCommunityPopupOpen} />}
         {!isMobile && <Header selectedLanguage={selectedLanguage} changeLanguage={changeLanguage} />}
-      <div className="max-w-5xl mx-auto p-6 z-10 relative">
+      <div className="max-w-5xl mx-auto p-6 z-10 relative min-h-fit">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl w-[70%] font-crimson-text text-[#8b4513] mx-auto mb-6">
             {t('donationPage.title')}
@@ -115,8 +115,8 @@ function DonationPage() {
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-xl p-8">
-          <div className="flex flex-col md:flex-row gap-8 items-center justify-between mb-12">
+        <div className="bg-white rounded-lg shadow-xl p-8 h-fit">
+          <div className="flex flex-col md:flex-row gap-8 items-center md:items-end justify-between mb-12 h-full">
             <div className="flex flex-col flex-1 items-center text-center justify-between">
               <h2 className="text-2xl font-crimson-text text-[#2c1810] mb-4">
               {t('donationPage.support.title')}
@@ -133,7 +133,17 @@ function DonationPage() {
               </button>
             </div>
 
+            <div className='h-full flex flex-col justify-between text-center'>
             <div className="text-4xl text-[#8b4513] font-crimson-text">{t('donationPage.or')}</div>
+              <a 
+              href="https://buymeacoffee.com/sveto.rs/our-message"
+              className="bg-[#8b4513] mt-10 text-white px-8 py-3 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2 mx-auto"
+              target='_blank'
+              >
+                <i className="fa-solid fa-comments"></i>  
+                {t('homePage.comment')}
+              </a>
+            </div>
 
             <div className="flex flex-col flex-1 items-center text-center justify-between">
               <h2 className="text-2xl font-crimson-text text-[#2c1810] mb-4">

@@ -28,6 +28,7 @@
     },
         "share": "Share this prayer",
         "support": "Support our mission",
+        "comment":"Leave a comment",
         "more": "Learn more"
     },
     "donationPage":{
@@ -36,7 +37,7 @@
         "support":{
             "title":"Support Without Registration",
             "subtitle":"Make a direct contribution to support our mission without creating an account",
-            "CTA":"Make a Donation"
+            "CTA":"Support us"
         },
         "or": "OR",
         "community":{

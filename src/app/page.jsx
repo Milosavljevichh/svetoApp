@@ -288,6 +288,14 @@ function MainPage({
                 <i className="fa fa-heart"></i>
                 {t('homePage.support')}
               </button>
+              <a 
+              href="https://buymeacoffee.com/sveto.rs/our-message"
+              className="bg-[#8b4513] text-white px-8 py-3 rounded-lg transform transition hover:scale-105 flex items-center justify-center gap-2 mx-auto"
+              target='_blank'
+              >
+                <i className="fa-solid fa-comments"></i>  
+                Ostavi komentar
+              </a>
               <a
                 href="/DonatePage"
                 className="text-[#8b4513] hover:text-[#2c1810] transition-colors font-crimson-text text-lg underline decoration-1 underline-offset-4"
