@@ -72,7 +72,7 @@ const [commentLink,setCommentLink] = useState(languageLinks[selectedLanguage])
   useEffect(() => {
     if (isLanguageLoaded) {
       generateDailyPrayer(generatePrompt("Generate today's Orthodox prayer", selectedLanguage));
-      setCommentLink(selectedLanguage)
+      setCommentLink(languageLinks[selectedLanguage])
     }
   }, [isLanguageLoaded]);
 
