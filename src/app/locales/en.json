@@ -45,6 +45,10 @@
             "subtitle":"Register to receive updates and connect with our community",
             "CTA":"Register Now"
         },
+        "underDev":{
+            "title":"Under Development",
+            "content":"Our goal is to educate people about Orthodox Christianity, help them understand God's word, and create a loving and supportive community. The community feature is still under development, but we are working hard to build a space where members can connect, share their faith, and support one another. We appreciate your patience and look forward to bringing you a meaningful and engaging experience soon."
+        },
         "whyJoin":{
             "title":"Why Join Our Community?",
             "reasonTitles":{

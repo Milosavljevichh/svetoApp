@@ -47,6 +47,10 @@
             "subtitle": "Registrujte se da biste primali obaveštenja i povezali se sa našom zajednicom",
             "CTA": "Registrujte se sada"
         },
+        "underDev":{
+            "title":"U Razvoju",
+            "content":"Naš cilj je da edukujemo ljude o Pravoslavlju, pomognemo im da razumeju Božju reč i stvorimo voljenu i podržavajuću zajednicu. Funkcija zajednice je još uvek u razvoju, ali vredno radimo na izgradnji prostora gde članovi mogu da se povežu, dele svoju veru i podržavaju jedni druge. Cenimo vaše strpljenje i radujemo se što ćemo vam uskoro pružiti smisleno i angažujuće iskustvo."
+        },
         "whyJoin": {
             "title": "Zašto da se pridružite našoj zajednici?",
             "reasonTitles": {

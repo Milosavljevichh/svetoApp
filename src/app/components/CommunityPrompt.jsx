@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next';
+import '../i18n/i18n'; // Import the i18n setup
+
 export default function CommunityPrompt({ setShowPopup }) {
+  const { t, i18n } = useTranslation();
     return (
       <div
         className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
@@ -16,11 +20,11 @@ export default function CommunityPrompt({ setShowPopup }) {
           </button>
   
           <h2 className="text-2xl font-crimson-text text-[#2c1810] mb-6 text-center">
-            Under Development
+          {t('donationPage.underDev.title')}
           </h2>
   
           <p className="text-center">
-            Our goal is to educate people about Orthodox Christianity, help them understand God's word, and create a loving and supportive community. The community feature is still under development, but we are working hard to build a space where members can connect, share their faith, and support one another. We appreciate your patience and look forward to bringing you a meaningful and engaging experience soon.
+            {t('donationPage.underDev.content')}
           </p>
         </div>
       </div>
