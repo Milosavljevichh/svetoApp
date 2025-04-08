@@ -307,7 +307,7 @@ const [commentLink,setCommentLink] = useState(languageLinks[selectedLanguage])
               rel="noopener noreferrer"
               >
                 <i className="fa-solid fa-comments"></i>  
-                Ostavi komentar
+                {t('homePage.comment')}
               </a>
               <a
                 href="/DonatePage"
