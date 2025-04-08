@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 
 export async function POST(req) {
-    console.log("WISE_API_KEY:", process.env.WISE_API_KEY ? "Loaded" : "Not Loaded");
+    // console.log("WISE_API_KEY:", process.env.WISE_API_KEY ? "Loaded" : "Not Loaded");
 
     try {
         const { sourceCurrency, targetCurrency, amount } = await req.json();
@@ -22,7 +22,7 @@ export async function POST(req) {
             }
         )
         .then(response => {
-          console.log('Profiles:', response.data);
+        //   console.log('Profiles:', response.data);
         })
         .catch(error => {
           console.error('Error fetching profiles:', error);

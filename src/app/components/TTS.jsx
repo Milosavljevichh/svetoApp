@@ -17,7 +17,6 @@ const TextToSpeech = ({ text, isAudioLoading, isLoading, selectedLanguage }) => 
             if ('speechSynthesis' in window) {
 
                 const utterance = new SpeechSynthesisUtterance(text);
-                console.log(utterance)
 
                 // Set some options
                 utterance.pitch = 1; // Range is 0-2

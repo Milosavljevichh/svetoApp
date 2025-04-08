@@ -113,19 +113,21 @@ const [commentLink,setCommentLink] = useState(languageLinks[selectedLanguage])
     setIsLanguageLoaded(true)
     if (hasGeneratedDailyPrayer) {
       const prompts = getPrompts()
-      const textToTranslate = `Please translate this text to ${prompts[lang].lg} using ${prompts[lang].script} script because I don't understand it and it is related to Orthodox Christianity. Only translate it, without adding or removing any words or sentences. The text is: ${promptContent}`
+      const textToTranslate = `Please translate this ${prompts[selectedLanguage].lg} Orthodox text to ${prompts[lang].lg} using ${prompts[lang].script} script. Translate it word for word, without changes: ${promptContent}`
       refreshContent(textToTranslate, lang)
     }
   }
 
   function generateNewPrayer() {
     const prayerPrompt = "Give me a prayer from the prayer book whos official publisher is the church in the format of [Name of the prayer]: [prayer]. It should differ from: " + previousPrayers
-    refreshContent(prayerPrompt)
+    // refreshContent(prayerPrompt)
+    setUserContent(prayerPrompt)
   }
 
   function explainConcept(word) {
     const concept = `You mentioned ${word} when you said ${promptContent}. Can you explain to me what ${word} is and inform me more about it?`
-    refreshContent(concept)
+    // refreshContent(concept)
+    setUserContent(concept)
   }
   
   return (

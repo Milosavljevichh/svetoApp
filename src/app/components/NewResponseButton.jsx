@@ -1,6 +1,5 @@
 export default function NewResponseButton({refreshContent, previousUserContent, selectedLang}){
     function regeneratePrompt(){
-        console.log(previousUserContent)
         refreshContent(previousUserContent, selectedLang)
     }
     return(
