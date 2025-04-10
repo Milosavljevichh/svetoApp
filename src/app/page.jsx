@@ -84,13 +84,13 @@ const [commentLink,setCommentLink] = useState(languageLinks[selectedLanguage])
     }
   }, [userContent])
 
-  const refreshContent = async (prompt, lang) => {
+  const refreshContent = async (prompt, lang, systemRole) => {
     if (isLoading) return;
     const randomIcon = Object.keys(icons)[Math.floor(Math.random() * 3)];
     setIcon(randomIcon);
 
     const newPrompt = generatePrompt(prompt, lang || selectedLanguage);
-    await fetchChatGPT(newPrompt, `You are an Orthodox Christian assistant. Provide detailed answers or prayers based on user-selected topics. Each response should align with Orthodox teachings and:
+    await fetchChatGPT(newPrompt, systemRole ? systemRole : `You are an Orthodox Christian assistant. Provide detailed answers or prayers based on user-selected topics. Each response should align with Orthodox teachings and:
                           - For icon questions: Explain their spiritual significance, proper veneration, and historical context
                           - For healing prayers: Provide traditional Orthodox prayers for healing, including references to saints known for healing
                           - For fasting questions: Explain Orthodox fasting traditions, spiritual benefits, and practical guidance
@@ -114,7 +114,8 @@ const [commentLink,setCommentLink] = useState(languageLinks[selectedLanguage])
     if (hasGeneratedDailyPrayer) {
       const prompts = getPrompts()
       const textToTranslate = `Please translate this ${prompts[selectedLanguage].lg} Orthodox text to ${prompts[lang].lg} using ${prompts[lang].script} script. Translate it word for word, without changes: ${promptContent}`
-      refreshContent(textToTranslate, lang)
+      const role = 'You are a professional translator. You translate texts word for word and thats all you do. You first translate them to english and then to the desired language.'
+      refreshContent(textToTranslate, lang, role)
     }
   }
 
